@@ -1,7 +1,7 @@
 ﻿
 namespace SimpleCRUDWebApp.Infastructure.Middlewares
 {
-    class ExceptionMiddleware
+    public class ExceptionMiddleware
     {
     }
 }
