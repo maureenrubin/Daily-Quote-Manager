@@ -1,4 +1,4 @@
-﻿namespace SimpleCRUDWebApp.Client.Controllers
+﻿namespace SimpleCRUDWebApp.Api.Controllers
 {
     public class UserController
     {
