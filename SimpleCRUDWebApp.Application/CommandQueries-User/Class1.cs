@@ -1,4 +1,7 @@
-﻿namespace SimpleCRUDWebApp.Application
+﻿
+
+
+namespace SimpleCRUDWebApp.Application
 {
     public class Class1
     {
