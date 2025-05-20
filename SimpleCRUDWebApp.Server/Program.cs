@@ -7,17 +7,20 @@ var builder = WebApplication.CreateBuilder(args);
 //options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 
+
 // Dependency Injection
 
 // Add services to the container.
 builder.Services.AddControllers();
-
-
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
+//builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof))
+
+//builder.Services.AddScoped
+
+var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")!.Split(",");
 
 builder.Services.AddCors(policy =>
 {
@@ -30,10 +33,6 @@ builder.Services.AddCors(policy =>
         .AllowCredentials();
     });
 });
-
-
-
-
 
 var app = builder.Build();
 
