@@ -7,9 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="CommandQueries-User\" />
-    <Folder Include="Common-Interfaces\" />
-    <Folder Include="DTOs\" />
+    <Folder Include="Services\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="12.5.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="9.0.5" />
+	 
+	  <ProjectReference Include="..\SimpleCRUDWebApp.Domain\SimpleCRUDWebApp.Domain.csproj" />
   </ItemGroup>
 
 </Project>
