@@ -1,6 +1,6 @@
-﻿namespace SimpleCRUDWebApp.Infastructure
+﻿namespace SimpleCRUDWebApp.Infastructure.Persistence
 {
-    public class Class1
+    public class ApplicationDbContextFactory
     {
 
     }
