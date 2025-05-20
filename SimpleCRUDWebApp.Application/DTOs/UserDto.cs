@@ -1,4 +1,4 @@
-﻿using SimpleCRUDWebApp.Domain
+﻿
 namespace SimpleCRUDWebApp.Application.DTOs
 {
     public class UserDto 
