@@ -17,7 +17,12 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="8.1.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="7.3.1" />
 	  
-	  <ProjectReference Include="..\SimpleCRUDWebApp.Infastructure\SimpleCRUDWebApp.Infastructure.csproj" />
+	  
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\SimpleCRUDWebApp.Application\SimpleCRUDWebApp.Application.csproj" />
+    <ProjectReference Include="..\SimpleCRUDWebApp.Infastructure\SimpleCRUDWebApp.Infastructure.csproj" />
   </ItemGroup>
 
 </Project>
