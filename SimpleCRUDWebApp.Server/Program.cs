@@ -1,11 +1,14 @@
+using SimpleCRUDWebApp.Application.Common.Interfaces;
+using SimpleCRUDWebApp.Infastructure.Persistence;
+
+
+
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Database Connection String
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
+builder.Services.AddScoped<IApplicationDbContext>(provider => provider.GetRequiredService<ApplicationDbContext>());
 
 
 // Dependency Injection
@@ -18,7 +21,6 @@ builder.Services.AddSwaggerGen();
 
 //builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof))
 
-//builder.Services.AddScoped
 
 var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")!.Split(",");
 
