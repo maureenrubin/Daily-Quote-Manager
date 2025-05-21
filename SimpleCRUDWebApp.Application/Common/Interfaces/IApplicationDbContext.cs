@@ -1,16 +1,17 @@
-﻿
+﻿using Microsoft.EntityFrameworkCore;
+using SimpleCRUDWebApp.Domain.Entities;
 
-using Microsoft.EntityFrameworkCore;
-
-namespace SimpleCRUDWebApp.Domain.Commons.Interfaces
+namespace SimpleCRUDWebApp.Application.Common.Interfaces
 {
     public interface IApplicationDbContext
     {
-        #region Properties
+            #region Properties
 
-       // DbSet<User>
+            DbSet<User> User { get; }
 
-        #endregion Properties
+            #endregion Properties
 
     }
+
 }
+
