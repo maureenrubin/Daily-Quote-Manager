@@ -1,9 +1,10 @@
-﻿
+﻿using SimpleCRUDWebApp.Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using SimpleCRUDWebApp.Domain.Entities;
 
 namespace SimpleCRUDWebApp.Infastructure.Persistence
 {
-    public class ApplicationDbContext : DbContext
+    public class ApplicationDbContext : DbContext, IApplicationDbContext
     {
 
         #region Public Constructor
@@ -18,12 +19,18 @@ namespace SimpleCRUDWebApp.Infastructure.Persistence
 
         #region Properties
 
-        // public DbSet<>
+        public DbSet<User> User => Set<User>();
 
         #endregion Properties
 
 
         #region Methods
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
+        }
 
         #endregion Methods
     }
