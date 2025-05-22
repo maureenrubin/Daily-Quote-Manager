@@ -24,7 +24,7 @@ namespace SimpleCRUDWebApp.Infastructure.Persistence
         #endregion Properties
 
 
-        #region Methods
+        #region Protected Methods
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,6 @@ namespace SimpleCRUDWebApp.Infastructure.Persistence
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
         }
 
-        #endregion Methods
+        #endregion Protected Methods
     }
 }
