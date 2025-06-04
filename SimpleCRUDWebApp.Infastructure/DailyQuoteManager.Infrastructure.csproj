@@ -24,9 +24,4 @@
     <ProjectReference Include="..\SimpleCRUDWebApp.Application\DailyQuoteManager.Application.csproj" />
     <ProjectReference Include="..\SimpleCRUDWebApp.Domain\DailyQuoteManager.Domain.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="PusherService\" />
-  </ItemGroup>
-
 </Project>
