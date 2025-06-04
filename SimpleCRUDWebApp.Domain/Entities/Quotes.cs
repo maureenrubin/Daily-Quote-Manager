@@ -7,7 +7,7 @@ namespace DailyQuoteManager.Domain.Entities
     public class Quotes
     {
         [Key]
-        public Guid Id { get; set; } = Guid.NewGuid();
+        public Guid QuoteId { get; set; } = Guid.NewGuid();
 
         [Required]
         [MaxLength(1000)]
