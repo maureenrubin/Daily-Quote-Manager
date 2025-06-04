@@ -5,14 +5,7 @@ namespace DailyQuoteManager.Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
-        #region Fields
-
-
-
-        #endregion Fields
-
-        
-        
+       
         #region Public Constructors
 
         public AppDbContext(DbContextOptions<AppDbContext> options ) : base (options)
@@ -30,5 +23,14 @@ namespace DailyQuoteManager.Infrastructure.Data
 
         #endregion Properties
 
+        #region Protected Methods
+       
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        }
+
+        #endregion Protected Methods
     }
 }
