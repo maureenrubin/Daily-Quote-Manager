@@ -1,23 +1,27 @@
-﻿using SimpleCRUDWebApp.Domain.Abstractions;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace SimpleCRUDWebApp.Domain.Entities
 {
-    public class User : BaseEntity
+    public class User 
     {
         #region Properties
+        
+        [Key]
+        public Guid Id { get; set; }
 
-        public string FirstName { get; set; } = string.Empty;
+        [Required]
+        public string FullName { get; set; } = string.Empty;
 
-        public string LastName { get; set; } = string.Empty;
-
+        [Required, EmailAddress, MaxLength(255)]
         public string Email { get; set; } = string.Empty;
 
-        public string Password { get; set; } = string.Empty;
+        [Required]
+        public string PasswordHash { get; set; } = string.Empty;
 
-        public string Gender { get; set; } = string.Empty;
+        public bool IsActive { get; set; } = true;
 
-        public DateTime? CreatedAt { get; set; }
-
+        [Required]
+        public ICollection<UserRole> UserRoles { get; set; }
         #endregion Properties
     }
 }

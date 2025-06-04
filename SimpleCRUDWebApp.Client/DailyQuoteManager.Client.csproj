@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MudBlazor" Version="8.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\Enums\" />
+    <Folder Include="Utilities\" />
+    <Folder Include="Styles\" />
+    <Folder Include="Security\" />
+    <Folder Include="Services\Contracts\" />
+  </ItemGroup>
+
+</Project>
