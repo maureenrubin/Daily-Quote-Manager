@@ -24,13 +24,20 @@ namespace DailyQuoteManager.Domain.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [Required]
-        public string Role { get; set; } = string.Empty;
+        public string Role { get; set; } = "User";
 
         [JsonIgnore]
         public virtual ICollection<Quotes> AddedQuotes { get; set; } = new List<Quotes>();
 
         [JsonIgnore]
+        public virtual ICollection<FavoriteQuote> FavoriteQuotes { get; set; } = new List<FavoriteQuote>();
+
+        [JsonIgnore]
+        public virtual ICollection<DailyQuote> DailyQuotes { get; set; } = new List<DailyQuote>();
+
+        [JsonIgnore]
         public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
-        #endregion Propertoies
+
+        #endregion Properties
     }
 }
