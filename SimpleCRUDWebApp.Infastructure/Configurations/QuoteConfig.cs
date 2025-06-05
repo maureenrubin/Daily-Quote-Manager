@@ -6,17 +6,24 @@ namespace DailyQuoteManager.Infrastructure.Configurations
 {
     public class QuoteConfig : IEntityTypeConfiguration<Quotes>
     {
+        #region Public Methods
+        
         public void Configure(EntityTypeBuilder<Quotes> builder)
-        { 
+        {
             builder.HasKey(q => q.QuoteId);
 
+            //Quote added by user
             builder.HasOne(q => q.AddedByUser)
-                   .WithMany(u => u.AddedQuotes) 
+                   .WithMany(u => u.AddedQuotes)
                    .HasForeignKey(q => q.AddedByUserId)
-                   .OnDelete(DeleteBehavior.Cascade);  
+                   .OnDelete(DeleteBehavior.Cascade);
+
 
             builder.HasIndex(q => q.Category);
 
         }
+
+        #endregion
+
     }
 }
