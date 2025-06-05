@@ -10,7 +10,9 @@ namespace DailyQuoteManager.Infrastructure.Configurations
 
         public void Configure(EntityTypeBuilder<RefreshToken> builder)
         {
-            builder.HasKey(r => r.RefreshTokenId);
+            builder.HasKey(r => r.TokenId);
+
+           
         }
 
         #endregion Public Methods
