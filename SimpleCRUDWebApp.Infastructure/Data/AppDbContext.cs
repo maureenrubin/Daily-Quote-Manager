@@ -5,32 +5,33 @@ namespace DailyQuoteManager.Infrastructure.Data
 {
     public class AppDbContext : DbContext
     {
-       
         #region Public Constructors
 
-        public AppDbContext(DbContextOptions<AppDbContext> options ) : base (options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
-
         }
-        #endregion Public Constructors
 
+        #endregion
 
-        #region Properties
+        #region DbSets / Properties
 
-        public DbSet<ApplicationUser> ApplicationUsers { get; set; }
-        public DbSet<RefreshToken> RefreshTokens { get; set; }
-        public DbSet<Quotes> Quotes { get; set; }
+        public DbSet<ApplicationUser> ApplicationUsers { get; set; } = null!;
+        public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
+        public DbSet<Quotes> Quotes { get; set; } = null!;
+        public DbSet<FavoriteQuote> FavoriteQuotes { get; set; } = null!;
+        public DbSet<DailyQuote> DailyQuotes { get; set; } = null!;
 
-        #endregion Properties
+        #endregion
 
         #region Protected Methods
-       
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
+
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
 
-        #endregion Protected Methods
+        #endregion
     }
 }
