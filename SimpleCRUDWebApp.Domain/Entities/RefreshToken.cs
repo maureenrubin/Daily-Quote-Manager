@@ -1,6 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DailyQuoteManager.Domain.Entities
 {
@@ -9,27 +8,25 @@ namespace DailyQuoteManager.Domain.Entities
         #region Properties
 
         [Key]
-        public Guid RefreshTokenId { get; set; } = Guid.NewGuid();
+        public Guid TokenId { get; set; } = Guid.NewGuid();
 
-        [ForeignKey("AppUserId")]
-        public Guid AppUserId { get; set; }
-
+        [Required]
         public string Token { get; set; } = string.Empty;
 
-        [Required]
-        public string Email { get; set; } = string.Empty;
+        public DateTime ExpiresAt { get; set; }
+
+        public bool IsRevoked { get; set; } = false;
 
         [Required]
-        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+        public Guid UserId { get; set; }
 
-        [Required]
-        public DateTime? Expires { get; set; } = DateTime.UtcNow;
+        #endregion
 
-        public bool Enabled { get; set; }
+        #region Navigation Properties
 
-        [JsonIgnore]
-        public virtual ApplicationUser ApplicationUser { get; set; } = default!;
+        [ForeignKey(nameof(UserId))]
+        public virtual ApplicationUser User { get; set; } = null!;
 
-        #endregion Properties
+        #endregion
     }
 }
