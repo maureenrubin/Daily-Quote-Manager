@@ -15,7 +15,6 @@
     <Folder Include="Utilities\" />
     <Folder Include="Styles\" />
     <Folder Include="Security\" />
-    <Folder Include="Services\Contracts\" />
   </ItemGroup>
 
 </Project>
