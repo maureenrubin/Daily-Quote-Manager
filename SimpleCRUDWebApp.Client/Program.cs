@@ -1,22 +1,19 @@
 using DailyQuoteManager.Client.Components;
-using MudBlazor.Services;
+using DailyQuoteManager.Client.DependencyInjections;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddScoped(sp => new HttpClient 
-{ BaseAddress = new Uri("https://localhost:7223") });
-
-
 // Add services to the container.
+builder.Services.AddServices(builder.Configuration);
 
+builder.Services.AddAuthentication("Cookies")
+    .AddCookie("Cookies", options =>
+    {
+        options.LoginPath = "/"; 
+    });
 
-
-builder.Services.AddMudServices();
-
-
-
-builder.Services.AddRazorComponents()
-    .AddInteractiveServerComponents();
+builder.Services.AddAuthorization(); 
 
 var app = builder.Build();
 
