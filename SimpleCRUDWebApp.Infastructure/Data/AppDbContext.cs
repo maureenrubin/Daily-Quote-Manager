@@ -11,7 +11,7 @@ namespace DailyQuoteManager.Infrastructure.Data
         {
         }
 
-        #endregion
+        #endregion Public Constructors
 
         #region DbSets / Properties
 
@@ -21,7 +21,7 @@ namespace DailyQuoteManager.Infrastructure.Data
         public DbSet<FavoriteQuote> FavoriteQuotes { get; set; } = null!;
         public DbSet<DailyQuote> DailyQuotes { get; set; } = null!;
 
-        #endregion
+        #endregion DbSets / Properties
 
         #region Protected Methods
 
@@ -32,6 +32,6 @@ namespace DailyQuoteManager.Infrastructure.Data
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
         }
 
-        #endregion
+        #endregion Protected Methods
     }
 }
