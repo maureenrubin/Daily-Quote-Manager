@@ -19,10 +19,8 @@
 
   <ItemGroup>
     <Folder Include="Common\Responses\" />
-    <Folder Include="DTOs\Auth\Login\" />
-    <Folder Include="DTOs\Auth\ChangePassword\" />
-    <Folder Include="DTOs\Auth\RefreshToken\" />
-    <Folder Include="DTOs\Auth\Register\" />
+    <Folder Include="DTOs\Quote\DailyQuote\" />
+    <Folder Include="DTOs\Quote\FavoriteQuote\" />
   </ItemGroup>
 
 </Project>
