@@ -11,9 +11,9 @@ namespace DailyQuoteManager.Domain.Interfaces
 
         Task<ApplicationUser?> GetUserByIdAsync(Guid appUserId);
         
-        Task<IEnumerable<ApplicationUser>> GetAllUserAsync();
+       // Task<IEnumerable<ApplicationUser>> GetAllUserAsync();
 
-        Task<IEnumerable<string>> GetAllUserEmailsAsync();
+        //Task<IEnumerable<string>> GetAllUserEmailsAsync();
 
         Task AddAsync(ApplicationUser user);
 
