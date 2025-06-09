@@ -38,6 +38,7 @@ namespace DailyQuoteManager.Infrastructure.DependencyInjections
             });
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
         }
     }
 }
