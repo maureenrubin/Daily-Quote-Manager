@@ -1,6 +1,6 @@
-﻿using DailyQuoteManager.Application.Services;
-using DailyQuoteManager.Application.Services.Contracts;
+﻿using DailyQuoteManager.Domain.Interfaces;
 using DailyQuoteManager.Infrastructure.Data;
+using DailyQuoteManager.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -37,13 +37,7 @@ namespace DailyQuoteManager.Infrastructure.DependencyInjections
                        .LogTo(Console.WriteLine, LogLevel.Information);
             });
 
-            services.AddScoped<IAccountManagementService, AccountManagementService>();
-            services.AddScoped<IAuthService, AuthService>();
-            services.AddScoped<IPasswordHasherService, PasswordHasherService>();
-            services.AddScoped<IUserService, UserService>();
-            services.AddScoped<ITokenService, TokenService>();
-
-           // services.AddRepositories();
+            services.AddScoped<IUserRepository, UserRepository>();
         }
     }
 }
