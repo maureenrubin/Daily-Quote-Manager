@@ -1,4 +1,4 @@
-﻿using DailyQuoteManager.Application.Services.Contracts;
+﻿using DailyQuoteManager.Application.Services.Interfaces;
 
 namespace DailyQuoteManager.Application.Services
 {
