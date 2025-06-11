@@ -8,14 +8,9 @@ namespace DailyQuoteManager.Domain.Interfaces
     {
         #region Public Methods 
 
-        public async Task<RefreshToken?> AddAsync(RefreshToken refreshToken, Guid appUserId)
-        {
-            refreshToken.UserId = appUserId;
+        Task<RefreshToken?> AddAsync(RefreshToken refreshToken, Guid appUserId);
 
-            await dbContext.RefreshTokens.AddAsync(refreshToken);
-            await dbContext.SaveChangesAsync();
-            return refreshToken;
-        }
+        Task<RefreshToken?> GetByTokenAsync(string token);
 
         #endregion Public Methods
 
