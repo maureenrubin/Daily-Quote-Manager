@@ -8,14 +8,19 @@ namespace DailyQuoteManager.Domain.Entities
         #region Properties
 
         [Key]
-        public Guid TokenId { get; set; } = Guid.NewGuid();
+        public Guid RefreshTokenId { get; set; } = Guid.NewGuid();
 
-        [Required]
         public string Token { get; set; } = string.Empty;
 
         public DateTime ExpiresAt { get; set; }
 
-        public bool IsRevoked { get; set; } = false;
+        public bool Enable { get; set; }
+
+        public DateTime CreatedAt { get; set; }
+
+        [Required]
+        public string Email { get; set; } = string.Empty;
+
 
         [Required]
         public Guid UserId { get; set; }
