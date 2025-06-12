@@ -3,38 +3,17 @@ using DailyQuoteManager.Infrastructure.Data;
 
 namespace DailyQuoteManager.Infrastructure.Repositories
 {
-    public class UnitOfWork : IUnitOfWork
+    public class UnitOfWork(AppDbContext dbContext,
+                            IUserRepository Users,
+                            IRefreshTokenRepository RefreshTokenRepository): IUnitOfWork
     {
-        #region Fields
-
-        private readonly AppDbContext dbContext;
-
-        #endregion Fields
-
         #region Properties
 
-        public IUserRepository Users { get; }
-        public IRefreshTokenRepository RefreshTokenRepository { get; }
+        public IUserRepository Users { get; } = Users;
+        public IRefreshTokenRepository RefreshTokenRepository { get; } = RefreshTokenRepository;
 
         #endregion Properties
 
-
-
-        #region Public Constructors
-
-        public UnitOfWork
-            (
-            AppDbContext dbContext,
-            IUserRepository userRepository,
-            IRefreshTokenRepository refreshTokenRepository
-            )
-        {
-            this.dbContext = dbContext;
-            this.Users = userRepository;
-            this.RefreshTokenRepository = refreshTokenRepository;
-        }
-
-        #endregion Public Constructors
 
         #region Public Methods
 
