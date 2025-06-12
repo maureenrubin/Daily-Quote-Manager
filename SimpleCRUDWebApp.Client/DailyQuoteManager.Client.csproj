@@ -14,7 +14,6 @@
     <Folder Include="Models\Enums\" />
     <Folder Include="Utilities\" />
     <Folder Include="Styles\" />
-    <Folder Include="Security\" />
   </ItemGroup>
 
 </Project>
