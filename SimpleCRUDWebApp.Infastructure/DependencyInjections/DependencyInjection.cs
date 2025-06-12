@@ -47,9 +47,12 @@ namespace DailyQuoteManager.Infrastructure.DependencyInjections
             //Services
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
-        
-        
-        
+            services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IPasswordHasherService, PasswordHasherService>(); 
+            services.AddScoped<IUnitOfWork, UnitOfWork>(); 
+
+
+
         }
     }
 }
