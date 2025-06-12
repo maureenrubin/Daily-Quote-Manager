@@ -1,6 +1,10 @@
 //using DailyQuoteManager.Application.Common.Interfaces;
 using DailyQuoteManager.Infrastructure.Middleware;
-
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using DailyQuoteManager.Infrastructure.DependencyInjections;
+using Microsoft.IdentityModel.Tokens;
+using System.Security.Claims;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,8 +20,30 @@ builder.Services.AddOpenApi();
 builder.Services.AddSwaggerAuth();
 
 //Add JWT Authentication
+builder.Services.AddAuthorization();
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.IncludeErrorDetails = true;
+        options.RequireHttpsMetadata = true;
+        options.SaveToken = true;
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["JWTSettings:SecretKey"]!)),
 
+            ValidateIssuer = true,
+            ValidIssuer = builder.Configuration["JWTSettingds:Issuer"],
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["JWTSettings:Audience"],
+            ValidateLifetime = true,
+            ClockSkew = TimeSpan.Zero,
+            RoleClaimType = ClaimTypes.Role
+        };
+    });
 
+builder.Services.AddServices(builder.Configuration);
 
 
 
