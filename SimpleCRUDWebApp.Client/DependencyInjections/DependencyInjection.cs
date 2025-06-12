@@ -44,6 +44,7 @@ namespace DailyQuoteManager.Client.DependencyInjections
             services.AddScoped<ISnackbarService, SnackbarService>();
             services.AddScoped<IUserClientService, UserClientService>();
             services.AddScoped<ITokenClientService, TokenClientService>();
+
         }
 
         #endregion Private Methods 
