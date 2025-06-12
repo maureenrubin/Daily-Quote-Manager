@@ -1,6 +1,19 @@
-﻿namespace DailyQuoteManager.Application.Services.Interfaces
+﻿using DailyQuoteManager.Domain.Entities;
+
+namespace DailyQuoteManager.Application.Services.Interfaces
 {
-    public class ITokenService
+    public interface ITokenService
     {
+        #region Public Methods
+
+        string GenerateAccessToken(ApplicationUser user);
+
+        RefreshToken GenerateRefreshToken();
+
+        //TokenResponseDto
+
+        #endregion Public Methods
+
+
     }
 }
