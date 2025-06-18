@@ -148,26 +148,33 @@ namespace DailyQuoteManager.Infrastructure.Migrations
 
             modelBuilder.Entity("DailyQuoteManager.Domain.Entities.RefreshToken", b =>
                 {
-                    b.Property<Guid>("TokenId")
+                    b.Property<Guid>("RefreshTokenId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<DateTime>("ExpiresAt")
+                    b.Property<Guid>("AppUserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<bool>("IsRevoked")
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Enable")
                         .HasColumnType("bit");
+
+                    b.Property<DateTime>("ExpiresAt")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Token")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasKey("RefreshTokenId");
 
-                    b.HasKey("TokenId");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("AppUserId");
 
                     b.ToTable("RefreshTokens");
                 });
@@ -224,7 +231,7 @@ namespace DailyQuoteManager.Infrastructure.Migrations
                 {
                     b.HasOne("DailyQuoteManager.Domain.Entities.ApplicationUser", "User")
                         .WithMany("RefreshTokens")
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("AppUserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
