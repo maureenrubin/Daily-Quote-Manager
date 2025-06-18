@@ -23,13 +23,13 @@ namespace DailyQuoteManager.Domain.Entities
 
 
         [Required]
-        public Guid UserId { get; set; }
+        public Guid AppUserId { get; set; }
 
         #endregion
 
         #region Navigation Properties
 
-        [ForeignKey(nameof(UserId))]
+        [ForeignKey(nameof(AppUserId))]
         public virtual ApplicationUser User { get; set; } = null!;
 
         #endregion
