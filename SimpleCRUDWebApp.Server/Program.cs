@@ -1,7 +1,6 @@
-//using DailyQuoteManager.Application.Common.Interfaces;
+using DailyQuoteManager.Infrastructure.DependencyInjections;
 using DailyQuoteManager.Infrastructure.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using DailyQuoteManager.Infrastructure.DependencyInjections;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
 using System.Text;
