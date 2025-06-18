@@ -1,5 +1,7 @@
-﻿using DailyQuoteManager.Application.Services;
-using DailyQuoteManager.Application.Services.Interfaces;
+﻿using DailyQuoteManager.Application.Interfaces.Auth;
+using DailyQuoteManager.Application.Interfaces.UserManagement;
+using DailyQuoteManager.Application.Services.Auth;
+using DailyQuoteManager.Application.Services.UserManagement;
 using DailyQuoteManager.Domain.Interfaces;
 using DailyQuoteManager.Infrastructure.Data;
 using DailyQuoteManager.Infrastructure.Repositories;
