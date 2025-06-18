@@ -26,7 +26,12 @@ namespace DailyQuoteManager.Application.DTOs.Auth.Register
         [Compare("Password", ErrorMessage = "Password do not match")]
         public string ConfirmPassword { get; set; } = string.Empty;
 
+        [Required(ErrorMessage = "Gender is required")]
+        [RegularExpression("^(Male|Female|Others)$", ErrorMessage = "Gender must be Male, Female, or Other")]
+        public string Gender { get; set; } = string.Empty; 
+
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
+
         public string Role { get; set; } = string.Empty;
 
         #endregion Properties
