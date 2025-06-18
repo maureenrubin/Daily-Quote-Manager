@@ -13,7 +13,7 @@ namespace DailyQuoteManager.Infrastructure.Repositories
 
         public async Task<RefreshToken?> AddAsync(RefreshToken refreshToken, Guid appUserId)
         {
-            refreshToken.UserId = appUserId;
+            refreshToken.AppUserId = appUserId;
 
             await _dbContext.RefreshTokens.AddAsync(refreshToken);
             await _dbContext.SaveChangesAsync();
@@ -27,6 +27,31 @@ namespace DailyQuoteManager.Infrastructure.Repositories
                                  .FirstOrDefaultAsync(r => r.Token == token);
         }
 
+        public async Task <bool> DisablerUserTokenAsync(string token)
+        {
+            var refreshTokens = await _dbContext.RefreshTokens
+                .Where(r => r.Token == token)
+                .ToListAsync();
+
+            if (refreshTokens.Count == 0)
+                return false;
+
+            foreach(var refreshToken in refreshTokens)
+            {
+                refreshToken.Enable = false;
+                _dbContext.Update(refreshToken);
+            }
+            return true;
+        }
+
+        public async Task<bool> IsRefreshTokenValidAsync(string token)
+        {
+            var isValid = await _dbContext.RefreshTokens
+                                .Where(r => r.Token == token && r.Enable && r.ExpiresAt >= DateTime.UtcNow.Date)
+                                .AnyAsync();
+
+            return isValid;
+        }
 
 
         #endregion Public Methods
