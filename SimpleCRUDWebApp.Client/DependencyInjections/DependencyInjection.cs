@@ -1,5 +1,9 @@
-﻿using DailyQuoteManager.Client.Services;
-using DailyQuoteManager.Client.Services.Contracts;
+﻿using DailyQuoteManager.Client.InterfacesClient.Auth;
+using DailyQuoteManager.Client.InterfacesClient.Quote;
+using DailyQuoteManager.Client.InterfacesClient.UserManagement;
+using DailyQuoteManager.Client.ServicesClient.Auth;
+using DailyQuoteManager.Client.ServicesClient.Quote;
+using DailyQuoteManager.Client.ServicesClient.UserManagement;
 using MudBlazor.Services;
 
 namespace DailyQuoteManager.Client.DependencyInjections
@@ -41,7 +45,6 @@ namespace DailyQuoteManager.Client.DependencyInjections
             services.AddScoped<IAccountManagementClientService, AccountManagementClientService>();
             services.AddScoped<IAuthClientService, AuthClientService>();
             services.AddScoped<IQuoteClientService, QuoteClientService>();
-            services.AddScoped<ISnackbarService, SnackbarService>();
             services.AddScoped<IUserClientService, UserClientService>();
             services.AddScoped<ITokenClientService, TokenClientService>();
 
