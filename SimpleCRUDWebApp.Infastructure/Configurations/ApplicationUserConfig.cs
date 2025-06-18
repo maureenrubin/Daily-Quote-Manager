@@ -1,7 +1,6 @@
 ﻿using DailyQuoteManager.Domain.Entities;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Hosting.Builder;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DailyQuoteManager.Infrastructure.Configurations
 {
@@ -16,7 +15,7 @@ namespace DailyQuoteManager.Infrastructure.Configurations
             //Refresh Token
             builder.HasMany(u => u.RefreshTokens)
                    .WithOne(r => r.User)
-                   .HasForeignKey(r => r.UserId)
+                   .HasForeignKey(r => r.AppUserId)
                    .OnDelete(DeleteBehavior.Cascade);
 
             //Quotes
