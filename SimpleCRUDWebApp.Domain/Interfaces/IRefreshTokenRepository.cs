@@ -1,6 +1,5 @@
 ﻿
 using DailyQuoteManager.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
 
 namespace DailyQuoteManager.Domain.Interfaces
 {
@@ -11,6 +10,11 @@ namespace DailyQuoteManager.Domain.Interfaces
         Task<RefreshToken?> AddAsync(RefreshToken refreshToken, Guid appUserId);
 
         Task<RefreshToken?> GetByTokenAsync(string token);
+
+        Task<bool> DisablerUserTokenAsync(string token);
+
+        Task<bool> IsRefreshTokenValidAsync(string token);
+
 
         #endregion Public Methods
 
