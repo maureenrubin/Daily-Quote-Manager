@@ -1,5 +1,6 @@
 using DailyQuoteManager.Client.Components;
 using DailyQuoteManager.Client.DependencyInjections;
+using MudBlazor.Services;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddServices(builder.Configuration);
 
+builder.Services.AddMudServices();
+builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>
     {
