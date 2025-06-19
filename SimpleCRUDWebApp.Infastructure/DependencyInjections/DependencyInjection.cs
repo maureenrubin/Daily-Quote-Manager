@@ -3,8 +3,9 @@ using DailyQuoteManager.Application.Interfaces.UserManagement;
 using DailyQuoteManager.Application.Services.Auth;
 using DailyQuoteManager.Application.Services.UserManagement;
 using DailyQuoteManager.Domain.Interfaces;
-using DailyQuoteManager.Infrastructure.Data;
-using DailyQuoteManager.Infrastructure.Repositories;
+using DailyQuoteManager.Infrastructure.Persistence.DatabaseContext;
+using DailyQuoteManager.Infrastructure.Persistence.Repositories;
+using DailyQuoteManager.Infrastructure.Persistence.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -31,7 +32,7 @@ namespace DailyQuoteManager.Infrastructure.DependencyInjections
 
             services.AddHttpClient("ApiClient", client =>
             {
-                // <-- Set this to your running API's base URL + "api/"
+                // the running API's base URL + "api/"
                 client.BaseAddress = new Uri("https://localhost:7223/api/");
             });
 
@@ -41,10 +42,7 @@ namespace DailyQuoteManager.Infrastructure.DependencyInjections
                        .LogTo(Console.WriteLine, LogLevel.Information);
             });
 
-            //Repository
-            services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
-
+            services.AddRepositories();
 
             //Services
             services.AddScoped<IUserService, UserService>();
