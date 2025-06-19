@@ -2,7 +2,10 @@
 {
     public interface ITokenClientService
     {
+        Task SetToken(string accessToken);
+
         Task<string> GetToken();
 
+        Task RemoveToken();
     }
 }
