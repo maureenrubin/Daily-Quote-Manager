@@ -1,11 +1,12 @@
-﻿namespace DailyQuoteManager.Application.Common.Responses
+﻿using System.Text.Json.Serialization;
+
+namespace DailyQuoteManager.Application.Common.Responses
 {
-    public class AuthResponseDto
+    public record AuthResponseDto
     {
-
-        #region Properties
-
         public string AccessToken { get; set; } = string.Empty;
+
+        public string RefreshToken { get; set; }
 
         public string Email { get; set; } = string.Empty;
 
@@ -13,6 +14,20 @@
 
         public DateTime TokenExpired { get; set; } = DateTime.UtcNow;
 
-        #endregion Properties
+        [JsonConstructor]
+        public AuthResponseDto(string accessToken, string refreshToken, string email, string role, DateTime tokenExpired)
+        {
+            AccessToken = accessToken;
+            RefreshToken = refreshToken;
+            Email = email;
+            Role = role;
+            TokenExpired = tokenExpired;
+        }
+
+
+        public AuthResponseDto(string accessToken, string token, string email, string role)
+           : this(accessToken, token, email, role, DateTime.UtcNow)
+        {
+        }
     }
 }
