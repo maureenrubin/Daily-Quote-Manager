@@ -47,6 +47,7 @@ namespace DailyQuoteManager.Client.DependencyInjections
             services.AddScoped<IQuoteClientService, QuoteClientService>();
             services.AddScoped<IUserClientService, UserClientService>();
             services.AddScoped<ITokenClientService, TokenClientService>();
+            services.AddScoped<IRefreshTokenClientService, RefreshTokenClientService>();
 
         }
 
