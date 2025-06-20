@@ -2,7 +2,6 @@
 {
     public interface IAuthClientService
     {
-
         Task<bool> LoginAsync(string email, string password);
     }
 }
