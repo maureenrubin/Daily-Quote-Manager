@@ -4,7 +4,6 @@ using DailyQuoteManager.Application.Services.Auth;
 using DailyQuoteManager.Application.Services.UserManagement;
 using DailyQuoteManager.Domain.Interfaces;
 using DailyQuoteManager.Infrastructure.Persistence.DatabaseContext;
-using DailyQuoteManager.Infrastructure.Persistence.Repositories;
 using DailyQuoteManager.Infrastructure.Persistence.UnitOfWork;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
