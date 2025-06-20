@@ -1,8 +1,6 @@
-﻿@page "/"
+﻿@page "/login"
 @inherits LoginBase
-@using DailyQuoteManager.Client.InterfacesClient.Auth
-@inject IAuthClientService authClientService
-@inject NavigationManager navigationManager
+@layout MainLayout
 
 <PageTitle>Login</PageTitle>
 
@@ -12,28 +10,28 @@
             Login
         </MudText>
 
-        <MudTextField @bind-Value="email"
+        <MudTextField @bind-Value="Input.Email"
                       Label="Email"
                       Variant="Variant.Outlined"
                       InputType="InputType.Email"
                       Class="mb-4"
                       FullWidth="true" />
 
-        <MudTextField @bind-Value="password"
+        <MudTextField @bind-Value="Input.Password"
                       Label="Password"
                       Variant="Variant.Outlined"
                       InputType="InputType.Password"
                       Class="mb-4"
                       FullWidth="true" />
 
-        @if (!string.IsNullOrEmpty(errorMessage))
+        @if (!string.IsNullOrWhiteSpace(Response.ErrorMessage))
         {
             <MudAlert Severity="Severity.Error" Class="mb-4">
-                @errorMessage
+                @Response.ErrorMessage
             </MudAlert>
         }
 
-        <MudButton OnClick="HandleLogin"
+        <MudButton OnClick="HandleLoginOnClick"
                    Variant="Variant.Filled"
                    Color="Color.Primary"
                    FullWidth="true"
