@@ -1,10 +1,12 @@
 ﻿using DailyQuoteManager.Client.InterfacesClient.Auth;
 using Microsoft.JSInterop;
+using Newtonsoft.Json.Linq;
 
 namespace DailyQuoteManager.Client.ServicesClient.Auth
 {
     public class TokenClientService(
-        IJSRuntime jsRuntime): ITokenClientService
+        IJSRuntime jsRuntime,
+        ICookieClientService cookiesServices): ITokenClientService
     {
         #region Fields
 
@@ -16,19 +18,57 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
 
         public async Task SetToken(string accessToken)
         {
-            await jsRuntime.InvokeVoidAsync("localStorage.setItem", tokenKey, acc);
+            try
+            {
+                await cookiesServices.SetCookies(tokenKey, accessToken, 1);
+                await jsRuntime.InvokeVoidAsync("localStorage.setItem", tokenKey, accessToken);
+            }
+            catch(InvalidOperationException)
+            {
+
+            }
         }
 
         public async Task<string> GetToken()
         {
-            var token = await jsRuntime.InvokeAsync<string>("localStorage.getItem");
+            string token = null;
+            try
+            {
+                token = await jsRuntime.InvokeAsync<string>("localStorage.getItem");
 
-            return token ?? string.Empty;
+            }
+            catch (InvalidOperationException ex)
+            {
+                Console.Error.WriteLine($"[TokenService] Failed to get token from cookies: {ex.Message}"); 
+            }
+
+            if (string.IsNullOrEmpty(token))
+            {
+                try
+                {
+                    token = await jsRuntime.InvokeAsync<string>("localStorage.getItem", tokenKey);  
+                }
+                catch (InvalidOperationException ex)
+                {
+                    Console.Error.WriteLine($"[TokenService] Failed to get token from localStorage: {ex.Message}");
+                }
+            }
+            
+            return token;
         }
 
         public async Task RemoveToken()
         {
-            await jsRuntime.InvokeVoidAsync("localStorage.removeItem", tokenKey);
+            try
+            {
+                await cookiesServices.RemoveCookies(tokenKey);
+                await jsRuntime.InvokeVoidAsync("localStorage.removeItem", tokenKey);
+            }
+            catch (InvalidOperationException)
+            {
+
+            }
+           
         }
 
         #endregion Public Methods
