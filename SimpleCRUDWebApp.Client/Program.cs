@@ -13,7 +13,7 @@ builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>
     {
-        options.LoginPath = "/"; 
+        options.LoginPath = "/login"; 
     });
 
 builder.Services.AddAuthorization(); 
