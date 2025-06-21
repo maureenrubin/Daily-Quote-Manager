@@ -36,21 +36,19 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
 
         #region Public Methods
 
-        public async Task<bool> LoginAsync (string email, string password)
+        public async Task<bool> LoginAsync(string email, string password)
         {
             try
             {
-
-                //sends login request to the API
-                var response = await _httpClient.PostAsJsonAsync("api/auth/login", new { email, password});
+                // Sends login request to the API
+                var response = await _httpClient.PostAsJsonAsync("auth/login", new { email, password });
 
                 if (response.IsSuccessStatusCode)
                 {
-                    //reads the response body as JSON
+                    // Reads the response body as JSON
                     var json = await response.Content.ReadAsStringAsync();
                     var result = JsonConvert.DeserializeObject<AuthResponseDto>(json);
 
-                    
                     if (result != null && !string.IsNullOrEmpty(result.AccessToken))
                     {
                         await _tokenService.SetToken(result.AccessToken);
@@ -66,11 +64,10 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
                 {
                     _logger.LogError($"Login failed with status code: {response.StatusCode}");
                 }
-
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, "An error occured during login.");
+                _logger.LogError(ex, "An error occurred during login.");
             }
 
             return false;
