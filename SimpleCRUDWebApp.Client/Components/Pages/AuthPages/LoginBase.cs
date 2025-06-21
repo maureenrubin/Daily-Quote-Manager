@@ -4,6 +4,7 @@ using DailyQuoteManager.Client.Security;
 using Microsoft.AspNetCore.Components;
 using DailyQuoteManager.Client.Common.Responses;
 using DailyQuoteManager.Client.Utilities;
+using System.Security.Claims;
 
 namespace DailyQuoteManager.Client.Components.Pages.AuthPages
 {
@@ -18,6 +19,7 @@ namespace DailyQuoteManager.Client.Components.Pages.AuthPages
         #endregion
 
         #region Protected Fields
+
         protected LoginInputRequestDto Input { get; set; } = new();
         protected Response Response { get; set; } = new();
         protected ShowPasswordUtil showPasswordUtil { get; set; } = new();
@@ -36,11 +38,24 @@ namespace DailyQuoteManager.Client.Components.Pages.AuthPages
                 if (loginSuccess)
                 {
                     await customAuthStateProvider.NotifyUserAuthenticationStateChange();
-                    Navigation.NavigateTo("/dashboard");
+                    var authState = await customAuthStateProvider.GetAuthenticationStateAsync();
+                    var user = authState.User;
+
+                    var roleClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+                    var role = roleClaim?.Value ?? string.Empty;
+                   
+                    if(role == "User")
+                    {
+                        Navigation.NavigateTo("/dashboard");
+                    }
+                    else
+                    {
+                        Response = Response with { ErrorMessage = "Role is not recognized." };
+                    }
                 }
                 else
                 {
-                    Logger.LogWarning("Login failde: Invalid credentials.");
+                    Logger.LogWarning("Login faild: Invalid credentials.");
                     Response = new Response(ErrorMessage: "Invalid email or password", MessageType: "warning");
                 }
             }
@@ -56,10 +71,11 @@ namespace DailyQuoteManager.Client.Components.Pages.AuthPages
 
         }
 
-        protected override void OnInitialized()
+        protected void ShowPasswordOnClick()
         {
-            base.OnInitialized();
+            showPasswordUtil.Toggle();
         }
+
         #endregion
     }
 }
