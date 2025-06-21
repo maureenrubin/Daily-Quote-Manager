@@ -2,51 +2,98 @@
 @inherits LoginBase
 @layout MainLayout
 
-<PageTitle>Login</PageTitle>
+<PageTitle>Login - Daily Quote Manager</PageTitle>
 
-<MudContainer MaxWidth="MaxWidth.Small" Class="d-flex align-center justify-center" Style="height: 100vh;">
-    <MudPaper Elevation="3" Class="pa-8" Style="width: 100%; max-width: 400px;">
-        <MudText Typo="Typo.h4" Align="Align.Center" GutterBottom="true" Class="mb-6">
-            Login
-        </MudText>
+<MudThemeProvider />
 
-        <MudTextField @bind-Value="Input.Email"
-                      Label="Email"
-                      Variant="Variant.Outlined"
-                      InputType="InputType.Email"
-                      Class="mb-4"
-                      FullWidth="true" />
+<MudMainContent>
+    <MudContainer Class="d-flex align-center justify-center" Style="height: 100vh;">
+        <MudCard Class="pa-8" Style="width: 100%; max-width: 500px;">
+            <MudCardContent>
+                <div class="text-center mb-6">
+                    <MudText Typo="Typo.h4" Color="Color.Primary" Class="font-weight-bold">Sign In</MudText>
+                    <MudText Typo="Typo.subtitle1" Color="Color.Default" Class="mt-2">
+                        Welcome back! Please sign in to your account
+                    </MudText>
+                </div>
 
-        <MudTextField @bind-Value="Input.Password"
-                      Label="Password"
-                      Variant="Variant.Outlined"
-                      InputType="InputType.Password"
-                      Class="mb-4"
-                      FullWidth="true" />
+                @if (!string.IsNullOrEmpty(Response.ErrorMessage))
+                {
+                    <MudAlert Severity="@(Response.MessageType == "warning" ? Severity.Warning : Severity.Error)" 
+                              Variant="Variant.Filled"
+                              Class="mb-4">
+                        <MudAlert>@Response.ErrorMessage</MudAlert>
+                    </MudAlert>
+                }
 
-        @if (!string.IsNullOrWhiteSpace(Response.ErrorMessage))
-        {
-            <MudAlert Severity="Severity.Error" Class="mb-4">
-                @Response.ErrorMessage
-            </MudAlert>
-        }
+                <EditForm Model="Input" OnValidSubmit="HandleLoginOnClick" FormName="loginForm">
+                    <DataAnnotationsValidator />
+                    <MudForm>
 
-        <MudButton OnClick="HandleLoginOnClick"
-                   Variant="Variant.Filled"
-                   Color="Color.Primary"
-                   FullWidth="true"
-                   Size="Size.Large"
-                   Disabled="@isLoading"
-                   Class="mt-4">
-            @if (isLoading)
-            {
-                <MudProgressCircular Size="Size.Small" Indeterminate="true" Class="mr-2" />
-                <span>Logging in...</span>
-            }
-            else
-            {
-                <span>Login</span>
-            }
-        </MudButton>
-    </MudPaper>
-</MudContainer>
+                        <MudContainer Class="mt-5">
+                            <label class="block text-sm font-semibold mb-1">Email Address</label>
+                            <MudTextField @bind-Value="Input.Email"
+                                          T="string"
+                                          Label="Enter Email"
+                                          Variant="Variant.Outlined"
+                                          FullWidth
+                                          Class="min-h-[45px] max-h-[60px]"
+                                          Required />
+                        </MudContainer>
+
+                        <MudContainer Class="mt-5">
+                            <label class="block text-sm font-semibold mb-1">Password</label>
+                            <MudTextField @bind-Value="Input.Password"
+                                          T="string"
+                                          Label="Enter Password"
+                                          Variant="Variant.Outlined"
+                                          InputType="@(showPasswordUtil?.InputType ?? InputType.Password)"
+                                          Adornment="Adornment.End"
+                                          AdornmentIcon="@(showPasswordUtil?.Icon ?? Icons.Material.Filled.Visibility)"
+                                          OnAdornmentClick="ShowPasswordOnClick"
+                                          FullWidth
+                                          Class="min-h-[45px] max-h-[60px]"
+                                          Required />
+                        </MudContainer>
+
+                       <MudContainer>
+                            <MudLink Href="/forgot-password" 
+                                    Typo="Typo.body2"
+                                    Color="Color.Primary">
+                                Forgot Password?
+                            </MudLink>
+                        </MudContainer>
+
+                        <MudButton ButtonType="ButtonType.Submit"
+                                  Variant="Variant.Filled" 
+                                  Color="Color.Primary" 
+                                  FullWidth
+                                  Disabled="@isLoading"
+                                  Class="mt-6">
+                            @if (isLoading)
+                            {
+                                <MudCircularProgress Size="Size.Small" Color="Color.White" />
+                                <MudText Class="ml-2">Signing In...</MudText>
+                            }
+                            else
+                            {
+                                <span>Sign In</span>
+                            }
+                        </MudButton>
+                    </MudForm>
+                </EditForm>
+
+                <div class="text-center mt-4">
+                    <MudText Typo="Typo.body2">
+                        Don't have an account? 
+                        <MudLink Href="/register" 
+                                Typo="Typo.body2"
+                                Color="Color.Primary">
+                            Sign up here
+                        </MudLink>
+                    </MudText>
+                </div>
+            </MudCardContent>
+        </MudCard>
+    </MudContainer>
+</MudMainContent>
