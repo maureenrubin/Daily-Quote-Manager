@@ -18,8 +18,6 @@ namespace DailyQuoteManager.Client.Security
         #region Protected Methods
 
         
-
-        
         protected override async Task<HttpResponseMessage> SendAsync(
             HttpRequestMessage request,
             CancellationToken cancellationToken)
