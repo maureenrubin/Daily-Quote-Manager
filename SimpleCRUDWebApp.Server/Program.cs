@@ -1,5 +1,7 @@
 using DailyQuoteManager.Infrastructure.DependencyInjections;
-using DailyQuoteManager.Infrastructure.Middleware;
+using ApiExceptionMiddleware = DailyQuoteManager.Api.Middleware.ExceptionMiddleware;
+using InfraExceptionMiddleware = DailyQuoteManager.Infrastructure.Middleware.ExceptionMiddleware;
+using DailyQuoteManager.Api.Middleware;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
@@ -56,8 +58,7 @@ builder.Services.AddCors(policy =>
 {
     policy.AddPolicy("AllowBlazorApp", policy =>
     {
-        policy
-        .WithOrigins("https://localhost:7053")
+        policy.WithOrigins("https://localhost:7053")
         .AllowAnyHeader()
         .AllowAnyMethod()
         .AllowCredentials();
@@ -77,17 +78,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseStaticFiles();
-
 app.UseCors("AllowBlazorApp");
-
 app.UseHttpsRedirection();
-
-// Enable Authentication and Authorization middleware
 app.UseAuthentication();
 app.UseAuthorization();
-
-//app.UseMiddleware<ExceptionMiddleware>();
-
+app.UseMiddleware<ExceptionMiddleware>();
 app.MapControllers();
 
 app.Run();
