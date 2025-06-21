@@ -1,4 +1,5 @@
-﻿using DailyQuoteManager.Client.InterfacesClient.Auth;
+﻿using DailyQuoteManager.Client.Common.Events;
+using DailyQuoteManager.Client.InterfacesClient.Auth;
 using DailyQuoteManager.Client.InterfacesClient.Quote;
 using DailyQuoteManager.Client.InterfacesClient.UserManagement;
 using DailyQuoteManager.Client.Security;
@@ -36,6 +37,15 @@ namespace DailyQuoteManager.Client.DependencyInjections
                 client.Timeout = TimeSpan.FromMinutes(2);
             }).AddHttpMessageHandler<JwtHttpMessageHandler>();
 
+            services.ConfigureApplicationCookie(options =>
+            {
+                options.EventsType = typeof(CookieEvents);
+            });
+
+
+            services.AddAuthentication()
+            .AddScheme<CustomOption, JWTAuthenticationCookieHandler>("JWTAuth", options => { });
+            
             services.AddMudServices();
             services.AddCascadingAuthenticationState();
             services.AddHttpContextAccessor();
