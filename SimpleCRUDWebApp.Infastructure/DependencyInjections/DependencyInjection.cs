@@ -1,10 +1,10 @@
 ﻿using DailyQuoteManager.Application.Interfaces.Auth;
 using DailyQuoteManager.Application.Interfaces.UserManagement;
 using DailyQuoteManager.Application.Services.Auth;
-using DailyQuoteManager.Application.Services.UserManagement;
-using DailyQuoteManager.Domain.Interfaces;
 using DailyQuoteManager.Infrastructure.Persistence.DatabaseContext;
 using DailyQuoteManager.Infrastructure.Persistence.UnitOfWork;
+using DailyQuoteManager.Application.Services.UserManagement;
+using DailyQuoteManager.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,6 +34,7 @@ namespace DailyQuoteManager.Infrastructure.DependencyInjections
                 // the running API's base URL + "api/"
                 client.BaseAddress = new Uri("https://localhost:7223/api/");
             });
+
 
             services.AddDbContext<AppDbContext>(options =>
             {
