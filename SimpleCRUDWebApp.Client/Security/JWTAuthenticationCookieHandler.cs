@@ -23,21 +23,30 @@ namespace DailyQuoteManager.Client.Security
 
         #region Protected Methods
 
-        protected override async Task <AuthenticateResult> HandleAuthenticateAsync()
+        protected override Task <AuthenticateResult> HandleAuthenticateAsync()
         {
-            var token = Request.Cookies["access_token"];
-            if (string.IsNullOrEmpty(token))
+            try
             {
-                return AuthenticateResult.NoResult();
+                var token = Request.Cookies["access_token"];
+                if (string.IsNullOrEmpty(token))
+                {
+                    return Task.FromResult(AuthenticateResult.NoResult());
+                }
+
+                var readJWT = new JwtSecurityTokenHandler().ReadJwtToken(token);
+                var identity = new ClaimsIdentity(readJWT.Claims, "JWT");
+                var principals = new ClaimsPrincipal(identity);
+
+                var ticket = new AuthenticationTicket(principals, Scheme.Name);
+                return Task.FromResult(AuthenticateResult.Success(ticket));
+
             }
-
-            var readJWT = new JwtSecurityTokenHandler().ReadJwtToken(token);
-            var identity = new ClaimsIdentity(readJWT.Claims, "JWT");
-            var principals = new ClaimsPrincipal(identity);
-
-            var ticket = new AuthenticationTicket(principals, Scheme.Name);
-            return AuthenticateResult.Success(ticket);
-
+            catch (Exception ex)
+            {
+                Logger.LogWarning(ex, "JWT validation failed");
+                return Task.FromResult(AuthenticateResult.Fail("Invalid token."));
+            }
+          
         }
 
         protected override Task HandleChallengeAsync (AuthenticationProperties properties)
