@@ -10,7 +10,7 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
     {
         #region Fields
 
-        private readonly string tokenKey = "access_token";
+        private readonly string tokenKey = "_accessToken";
 
         #endregion Fields
 
@@ -31,7 +31,7 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
 
         public async Task<string> GetToken()
         {
-            string token = null;
+            string token = null!;
 
             try
             {
@@ -57,7 +57,7 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
             }
 
             Console.WriteLine($"[TokenService] Loaded token: {(token == null ? "null" : token.Substring(0, Math.Min(10, token.Length)) + "...")}");
-            return token;
+            return token!;
         }
 
 
