@@ -1,5 +1,5 @@
 ﻿using DailyQuoteManager.Application.Common.Responses;
-using DailyQuoteManager.Application.Interfaces.Auth;
+using DailyQuoteManager.Application.Contracts.Interfaces.Auth;
 using DailyQuoteManager.Domain.Entities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.JsonWebTokens;
