@@ -1,4 +1,5 @@
 ﻿using DailyQuoteManager.Client.Common.Responses;
+using DailyQuoteManager.Client.DTOs.Auth.Register;
 using DailyQuoteManager.Client.InterfacesClient.Auth;
 using Newtonsoft.Json;
 
@@ -35,6 +36,42 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
 
 
         #region Public Methods
+        public async Task<Response> RegisterAsync(RegisterUserInputRequestDto request)
+        {
+            try
+            {
+                var response = await _httpClient.PostAsJsonAsync("auth/register", request);
+
+                var responseContent = await response.Content.ReadAsStringAsync();
+
+                if (!response.IsSuccessStatusCode)
+                {
+
+                    var errorDto = JsonConvert.DeserializeObject<Response>(responseContent);
+                    var errorMessage = errorDto?.ErrorMessage ?? "Failed to register.";
+
+                    _logger.LogWarning("Registration failed: {ErrorMessage}", errorMessage);
+
+                    return new Response
+                    {
+                        IsSuccess = false,
+                        ErrorMessage = errorMessage
+                    };
+                
+                }
+
+                var registrationResponse = JsonConvert.DeserializeObject<Response>(responseContent);
+                return registrationResponse ?? new Response { IsSuccess = true, Message = "Registration Successful" };
+
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception occured during registration");
+                return new Response { IsSuccess = false, ErrorMessage = "An error occured during registration." };
+            }
+
+        }
+
 
         public async Task<bool> LoginAsync(string email, string password)
         {
@@ -73,6 +110,35 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
             return false;
         }
 
+
+        public async Task Logoutasync()
+        {
+            var refreshToken = await _refreshTokenService.Get();
+            _httpClient.DefaultRequestHeaders.Add("Cookie", $"_refreshToken={refreshToken}");
+            var response = await _httpClient.PostAsync("auth/logout", null);
+        }
+
+
+        public async Task<bool> RefreshTokenAsync()
+        {
+            var refreshToken = await _refreshTokenService.Get();
+            _httpClient.DefaultRequestHeaders.Add("Cookie", $"_refreshToken={refreshToken}");
+            var response = await _httpClient.PostAsync("auth/logout", null);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var token = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrEmpty(token))
+                {
+                    var result = JsonConvert.DeserializeObject<AuthResponseDto>(token);
+                    await _tokenService.SetToken(result!.AccessToken);
+                    await _refreshTokenService.Set(result.RefreshToken);
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         #endregion Public Methods
 
