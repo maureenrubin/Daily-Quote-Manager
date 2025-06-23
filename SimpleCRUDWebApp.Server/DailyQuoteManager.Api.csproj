@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DailyQuoteManager.Persistence\DailyQuoteManager.Persistence.csproj" />
     <ProjectReference Include="..\SimpleCRUDWebApp.Application\DailyQuoteManager.Application.csproj" />
     <ProjectReference Include="..\SimpleCRUDWebApp.Infastructure\DailyQuoteManager.Infrastructure.csproj" />
   </ItemGroup>
