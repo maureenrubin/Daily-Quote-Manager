@@ -1,33 +1,20 @@
-﻿using System.Text.Json.Serialization;
+﻿using Newtonsoft.Json;
+using System.Net.Http.Headers;
 
-namespace DailyQuoteManager.Client.Common.Responses
+public record AuthResponseDto
 {
-    public record AuthResponseDto
-    {
-        public string AccessToken { get; set; } = string.Empty;
+    [JsonProperty("accessToken")]
+    public string AccessToken { get; set; } = string.Empty;
 
-        public string RefreshToken { get; set; }
+    [JsonProperty("refreshToken")]
+    public string RefreshToken { get; set; } = string.Empty;
 
-        public string Email { get; set; } = string.Empty;
+    [JsonProperty("email")]
+    public string Email { get; set; } = string.Empty;
 
-        public string Role { get; set; } = string.Empty;
+    [JsonProperty("role")]
+    public string Role { get; set; } = string.Empty;
 
-        public DateTime TokenExpired { get; set; } = DateTime.UtcNow;
-
-        [JsonConstructor]
-        public AuthResponseDto(string accessToken, string refreshToken, string email, string role, DateTime tokenExpired)
-        {
-            AccessToken = accessToken;
-            RefreshToken = refreshToken;
-            Email = email;
-            Role = role;
-            TokenExpired = tokenExpired;
-        }
-
-
-        public AuthResponseDto(string accessToken, string token, string email, string role)
-           : this(accessToken, token, email, role, DateTime.UtcNow)
-        {
-        }
-    }
+    [JsonProperty("tokenExpired")]
+    public DateTime TokenExpired { get; set; } = DateTime.UtcNow;
 }
