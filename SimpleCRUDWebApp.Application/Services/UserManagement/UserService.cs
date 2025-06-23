@@ -1,4 +1,4 @@
-﻿using DailyQuoteManager.Application.Interfaces.UserManagement;
+﻿using DailyQuoteManager.Application.Contracts.Interfaces.UserManagement;
 using DailyQuoteManager.Domain.Entities;
 using DailyQuoteManager.Domain.Interfaces;
 
