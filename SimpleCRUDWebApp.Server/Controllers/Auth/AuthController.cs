@@ -1,7 +1,8 @@
 ﻿using DailyQuoteManager.Application.Common.Responses;
+using DailyQuoteManager.Application.Contracts.Interfaces.Auth;
 using DailyQuoteManager.Application.DTOs.Auth.Login;
 using DailyQuoteManager.Application.DTOs.Auth.Register;
-using DailyQuoteManager.Application.Interfaces.Auth;
+using DailyQuoteManager.Domain.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,7 +13,9 @@ namespace DailyQuoteManager.Api.Controllers.Auth
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController(
-                 IAuthService authService) : ControllerBase
+                 IAuthService authService,
+                 IRefreshTokenService refreshTokenService,
+                 IRefreshTokenRepository refreshTokenRepository) : ControllerBase
     {
         #region Public Methods 
         [HttpPost("register")]
@@ -63,6 +66,55 @@ namespace DailyQuoteManager.Api.Controllers.Auth
 
             return Ok(tokenResponse);
         }
+
+
+        [HttpPost("refresh-token")]
+        public async Task<ActionResult<TokenResponseDto>> RefreshToken()
+        {
+            var refreshToken = Request.Cookies["refreshtoken"];
+           
+            if (string.IsNullOrEmpty(refreshToken))
+            {
+                return BadRequest(new Response
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "RefreshToken is required."
+                });
+            }
+
+            var refreshTokenEntity = await refreshTokenRepository.GetByTokenAsync(refreshToken);
+           
+            if(refreshTokenEntity == null)
+            {
+                return BadRequest(new Response
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "Failed to refresh the token. Token may be expired or invalid"
+                });
+            }
+            var appUserId = refreshTokenEntity.AppUserId;
+
+            var tokenResponse = await refreshTokenService.RefreshTokenAsync(refreshToken, appUserId);
+            if (tokenResponse == null)
+            {
+                return BadRequest(new Response
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "Failed to refresh the token. Token may be expired or invalid."
+                });
+            }
+            return Ok(new Response 
+            { 
+                IsSuccess = true,
+                Message = "Token refreshed successfully",
+                Data = tokenResponse
+            });
+        }
+
+
+     //   [HttpPost("logout")]
+       // public async Task<IActionResult> Logout()
+
     }
         #endregion Public Methods
  }
