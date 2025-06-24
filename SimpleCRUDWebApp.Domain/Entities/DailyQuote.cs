@@ -25,7 +25,7 @@ namespace DailyQuoteManager.Domain.Entities
         #region Navigation Properties
 
         [ForeignKey(nameof(UserId))]
-        public virtual ApplicationUser User { get; set; } = null!;
+        public virtual ApplicationUser ApplicationUser { get; set; } = null!;
 
         [ForeignKey(nameof(QuoteId))]
         public virtual Quotes Quote { get; set; } = null!;
