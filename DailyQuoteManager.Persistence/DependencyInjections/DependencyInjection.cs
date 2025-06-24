@@ -48,8 +48,10 @@ namespace DailyQuoteManager.Persistence.DependencyInjections
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
-            services.AddScoped<IPasswordHasherService, PasswordHasherService>(); 
-           // services.AddScoped<IUnitOfWork, UnitOfWork>(); 
+            services.AddScoped<IPasswordHasherService, PasswordHasherService>();
+            services.AddScoped<IRefreshTokenService, RefreshTokenService>();
+           
+            // services.AddScoped<IUnitOfWork, UnitOfWork>(); 
 
 
 
