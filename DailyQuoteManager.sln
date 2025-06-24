@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyQuoteManager.Domain", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{B7BEBE48-F6F0-4082-945E-A23606374422}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyQuoteManager.Persistence", "DailyQuoteManager.Persistence\DailyQuoteManager.Persistence.csproj", "{741F3DB0-B216-4EBA-93DB-7ECD0C048BAC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +49,10 @@ Global
 		{B7BEBE48-F6F0-4082-945E-A23606374422}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B7BEBE48-F6F0-4082-945E-A23606374422}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7BEBE48-F6F0-4082-945E-A23606374422}.Release|Any CPU.Build.0 = Release|Any CPU
+		{741F3DB0-B216-4EBA-93DB-7ECD0C048BAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{741F3DB0-B216-4EBA-93DB-7ECD0C048BAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{741F3DB0-B216-4EBA-93DB-7ECD0C048BAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{741F3DB0-B216-4EBA-93DB-7ECD0C048BAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -57,6 +63,7 @@ Global
 		{C670DF8C-F058-4C74-A80B-C396207431EB} = {8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}
 		{F9E1F0DB-4AD8-420A-8D47-B95F3B987EAC} = {8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}
 		{670BBC7A-F8AE-44FA-9490-CE53AB9862E5} = {8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}
+		{741F3DB0-B216-4EBA-93DB-7ECD0C048BAC} = {8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8BD463F6-A95E-4564-A2E8-079FD7533F85}
