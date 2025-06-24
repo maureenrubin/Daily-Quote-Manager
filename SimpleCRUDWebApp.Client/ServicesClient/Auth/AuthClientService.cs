@@ -123,6 +123,7 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
         {
             var refreshToken = await _refreshTokenService.Get();
             _httpClient.DefaultRequestHeaders.Add("Cookie", $"_refreshToken={refreshToken}");
+            
             var response = await _httpClient.PostAsync("auth/logout", null);
 
             if (response.IsSuccessStatusCode)
