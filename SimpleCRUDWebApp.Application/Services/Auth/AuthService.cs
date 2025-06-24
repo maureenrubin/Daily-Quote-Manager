@@ -12,6 +12,7 @@ namespace DailyQuoteManager.Application.Services.Auth
                               IUnitOfWork unitOfWork,
                               ITokenService tokenService,
                               IRefreshTokenRepository refreshTokenRepository,
+                              IRefreshTokenService refreshTokenService,
                               ILogger<AuthService> logger) : IAuthService
     {
 
@@ -64,32 +65,46 @@ namespace DailyQuoteManager.Application.Services.Auth
 
             var token = tokenService.GenerateToken(user);
 
-            var refreshToken = new RefreshToken
+            var newRefreshToken = await refreshTokenService.CreateRefreshTokenAsync(user, token.RefreshToken);
+
+            if(newRefreshToken == null)
             {
-                RefreshTokenId = Guid.NewGuid(),
-                Token = Guid.NewGuid().ToString(),
-                ExpiresAt = DateTime.UtcNow.AddMonths(1),
-                CreatedAt = DateTime.UtcNow,
-                Enable = true,
-                AppUserId = user.AppUserId,
-                Email = user.Email
-            };
-
-            var savedRefreshToken = await refreshTokenRepository.AddAsync(refreshToken, user.AppUserId);
-            await unitOfWork.SaveChangesAsync();
-
-            logger.LogInformation("User logged in successfully.");
-
-            if(savedRefreshToken == null)
-            {
-                logger.LogError("Refresh token creation failed.");
+                logger.LogError("Failed to create refresh token during login.");
                 return null!;
             }
 
-            return new TokenResponseDto(token.AccessToken, savedRefreshToken.Token);
+            logger.LogInformation("User logged in successfully.");
+
+            return new TokenResponseDto(token.AccessToken, newRefreshToken.Token);
+
         }
 
+        public async Task<Response> LogoutAsync (string? refreshToken)
+        {
+            if (string.IsNullOrEmpty(refreshToken))
+                return new Response
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "No refresh token provided."
+                };
 
+            var tokenEntity = await refreshTokenRepository.GetByTokenAsync(refreshToken);
+            if(tokenEntity == null)
+            {
+                return new Response
+                {
+                    IsSuccess = false,
+                    ErrorMessage = "Token not found or already disabled."
+                };
+            }
+
+            await unitOfWork.SaveChangesAsync();
+            return new Response
+            {
+                IsSuccess = true,
+                Message = "Token disabled successfully."
+            };
+        }
 
         #endregion Public Methods
 
