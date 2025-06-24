@@ -15,7 +15,7 @@ namespace DailyQuoteManager.Persistence.Configurations.QuoteConfiguration
 
 
             // Each favorite quote belongs to one user
-            builder.HasOne(fq => fq.User)
+            builder.HasOne(fq => fq.ApplicationUser)
                    .WithMany(u => u.FavoriteQuotes)
                    .HasForeignKey(fq => fq.UserId)
                    .OnDelete(DeleteBehavior.Cascade);
