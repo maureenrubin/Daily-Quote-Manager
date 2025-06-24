@@ -7,7 +7,6 @@ using Microsoft.EntityFrameworkCore;
 namespace DailyQuoteManager.Persistence.Repositories
 {
     public class RefreshTokenRepository(AppDbContext _dbContext,
-        IRefreshTokenRepository refreshTokenRepository,
         IBaseRepository<RefreshToken> repository) : IRefreshTokenRepository
     {
         #region Public Methods 
@@ -24,7 +23,7 @@ namespace DailyQuoteManager.Persistence.Repositories
         public async Task<RefreshToken?> GetByTokenAsync(string token)
         {
             return await _dbContext.RefreshTokens
-                                 .Include(r => r.User)
+                                 .Include(r => r.ApplicationUser)
                                  .FirstOrDefaultAsync(r => r.Token == token);
         }
         public async Task <bool> DisablerUserTokenAsync(string token)
@@ -53,6 +52,12 @@ namespace DailyQuoteManager.Persistence.Repositories
             return isValid;
         }
 
+        public async Task<IEnumerable<RefreshToken>> GetByTokenListAsync(string token)
+        {
+            return await _dbContext.RefreshTokens
+                .Where(r => r.Token == token)
+                .ToListAsync();
+        }
 
         #endregion Public Methods
 
