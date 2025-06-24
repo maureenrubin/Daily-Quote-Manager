@@ -14,7 +14,7 @@ namespace DailyQuoteManager.Persistence.Configurations.QuoteConfiguration
             builder.HasKey(dq => dq.DailyQuoteId);
 
             // Relationships
-            builder.HasOne(dq => dq.User)
+            builder.HasOne(dq => dq.ApplicationUser)
                    .WithMany(u => u.DailyQuotes)
                    .HasForeignKey(dq => dq.UserId)
                    .OnDelete(DeleteBehavior.Cascade);
