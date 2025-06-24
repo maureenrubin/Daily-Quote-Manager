@@ -15,6 +15,7 @@ namespace DailyQuoteManager.Domain.Interfaces
 
         Task<bool> IsRefreshTokenValidAsync(string token);
 
+        Task<IEnumerable<RefreshToken>> GetByTokenListAsync(string token);
 
         #endregion Public Methods
 
