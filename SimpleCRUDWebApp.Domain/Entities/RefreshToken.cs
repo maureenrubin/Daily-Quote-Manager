@@ -30,7 +30,7 @@ namespace DailyQuoteManager.Domain.Entities
         #region Navigation Properties
 
         [ForeignKey(nameof(AppUserId))]
-        public virtual ApplicationUser User { get; set; } = null!;
+        public virtual ApplicationUser ApplicationUser { get; set; } = null!;
 
         #endregion
     }
