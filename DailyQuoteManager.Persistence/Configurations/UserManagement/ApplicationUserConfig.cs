@@ -14,7 +14,7 @@ namespace DailyQuoteManager.Persistence.Configurations.UserManagement
 
             //Refresh Token
             builder.HasMany(u => u.RefreshTokens)
-                   .WithOne(r => r.User)
+                   .WithOne(r => r.ApplicationUser)
                    .HasForeignKey(r => r.AppUserId)
                    .OnDelete(DeleteBehavior.Cascade);
 
@@ -26,13 +26,13 @@ namespace DailyQuoteManager.Persistence.Configurations.UserManagement
 
             //FavoriteQuotes
             builder.HasMany(u => u.FavoriteQuotes)
-                   .WithOne(f => f.User)
+                   .WithOne(f => f.ApplicationUser)
                    .HasForeignKey(f => f.UserId)
                    .OnDelete(DeleteBehavior.Cascade);
 
             //DailyQuotes
             builder.HasMany(u => u.DailyQuotes)
-                   .WithOne(d => d.User)
+                   .WithOne(d => d.ApplicationUser)
                    .HasForeignKey(d => d.UserId)
                    .OnDelete(DeleteBehavior.Cascade);
        
