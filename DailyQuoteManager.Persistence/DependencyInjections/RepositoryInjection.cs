@@ -1,7 +1,6 @@
 ﻿using DailyQuoteManager.Application.Contracts.Persistence;
 using DailyQuoteManager.Domain.Interfaces;
 using DailyQuoteManager.Persistence.Repositories;
-using DailyQuoteManager.Persistence.UnitOfWork;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace DailyQuoteManager.Infrastructure.DependencyInjections
@@ -10,7 +9,7 @@ namespace DailyQuoteManager.Infrastructure.DependencyInjections
     {
         #region Public Methods
 
-        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        public static IServiceCollection AddPersistenceRepositories(this IServiceCollection services)
         {
 
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
