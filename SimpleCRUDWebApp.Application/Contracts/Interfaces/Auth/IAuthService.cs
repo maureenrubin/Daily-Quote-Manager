@@ -13,6 +13,7 @@ namespace DailyQuoteManager.Application.Contracts.Interfaces.Auth
         Task<TokenResponseDto> LoginAsync(string email, string password);
 
         Task<Response> LogoutAsync(string? refreshToken);
+
         #endregion Public Methods
     }
 }
