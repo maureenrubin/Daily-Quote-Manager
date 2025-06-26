@@ -1,4 +1,6 @@
-﻿using DailyQuoteManager.Application.Common.Responses;
+﻿using AutoMapper;
+using DailyQuoteManager.Application.Common.Mapping.Profiles;
+using DailyQuoteManager.Application.Common.Responses;
 using DailyQuoteManager.Application.Contracts.Interfaces.Auth;
 using DailyQuoteManager.Application.DTOs.Auth.Register;
 using DailyQuoteManager.Domain.Entities;
@@ -6,13 +8,14 @@ using DailyQuoteManager.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace DailyQuoteManager.Application.Services.Auth
-{
+{  
     public class AuthService(IUserRepository userRepository,
                               IPasswordHasherService passwordHasherService,
                               IUnitOfWork unitOfWork,
                               ITokenService tokenService,
                               IRefreshTokenRepository refreshTokenRepository,
                               IRefreshTokenService refreshTokenService,
+                              IMapper mapper,
                               ILogger<AuthService> logger) : IAuthService
     {
 
@@ -31,14 +34,11 @@ namespace DailyQuoteManager.Application.Services.Auth
 
             var roleToAssign = string.IsNullOrWhiteSpace(request.Role) ? "User" : request.Role;
 
-            var newUser = new ApplicationUser
-            {
-                FullName = request.FullName,
-                Email = request.Email,
-                PasswordHash = hashedPassword,
-                CreatedAt = DateTime.UtcNow,
-                Role = roleToAssign
-            };
+            var newUser = mapper.Map<ApplicationUser>(request);
+            newUser.PasswordHash = hashedPassword;
+            newUser.CreatedAt = DateTime.UtcNow;
+            newUser.Role = roleToAssign;
+
 
             await userRepository.AddAsync(newUser);
             await unitOfWork.SaveChangesAsync();
@@ -72,6 +72,8 @@ namespace DailyQuoteManager.Application.Services.Auth
                 logger.LogError("Failed to create refresh token during login.");
                 return null!;
             }
+
+            await unitOfWork.SaveChangesAsync();
 
             logger.LogInformation("User logged in successfully.");
 
