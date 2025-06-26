@@ -112,8 +112,19 @@ namespace DailyQuoteManager.Api.Controllers.Auth
         }
 
 
-     //   [HttpPost("logout")]
-       // public async Task<IActionResult> Logout()
+        [HttpPost("logout")]
+        public async Task<IActionResult> Logout()
+        {
+            var refreshToken = Request.Cookies["refreshtoken"];
+            var result = await authService.LogoutAsync(refreshToken);
+
+            if (!result.IsSuccess)
+            {
+                return BadRequest(result.ErrorMessage);
+            }
+
+            return Ok(result.Message);
+        }
 
     }
         #endregion Public Methods
