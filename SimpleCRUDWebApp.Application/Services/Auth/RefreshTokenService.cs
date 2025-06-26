@@ -1,4 +1,5 @@
-﻿using DailyQuoteManager.Application.Common.Responses;
+﻿using AutoMapper;
+using DailyQuoteManager.Application.Common.Responses;
 using DailyQuoteManager.Application.Contracts.Interfaces.Auth;
 using DailyQuoteManager.Application.DTOs.Auth.RefreshToken;
 using DailyQuoteManager.Domain.Entities;
@@ -11,7 +12,8 @@ namespace DailyQuoteManager.Application.Services.Auth
     public class RefreshTokenService
         ( ITokenService tokenService,
           IRefreshTokenRepository refreshTokenRepository,
-          IUnitOfWork unitOfWork
+          IUnitOfWork unitOfWork,
+          IMapper mapper
         
         ): IRefreshTokenService
     {
@@ -33,12 +35,14 @@ namespace DailyQuoteManager.Application.Services.Auth
                 return null;
             }
 
+            // generate new access and refresh token
             var token = tokenService.GenerateToken(refreshTokenEntity.ApplicationUser);
 
             // disable the old refreshtoken
             await DisableUserTokenAsync(refreshToken);
 
-            var newRefreshToken = new RefreshToken
+          
+            var RefreshTokens = new RefreshToken
             {
                 Token = token.RefreshToken,
                 ExpiresAt = DateTime.UtcNow.AddMonths(1),
@@ -47,7 +51,7 @@ namespace DailyQuoteManager.Application.Services.Auth
                 Email = refreshTokenEntity.Email
             };
 
-            var savedRefreshToken = await refreshTokenRepository.AddAsync(newRefreshToken, appUserId);
+            var savedRefreshToken = await refreshTokenRepository.AddAsync(RefreshTokens, appUserId);
 
             if(savedRefreshToken == null)
             {
@@ -58,7 +62,7 @@ namespace DailyQuoteManager.Application.Services.Auth
 
             var refreshTokenDto = new RefreshTokenDto
             {
-                Token = savedRefreshToken.Token,
+                RefreshToken = savedRefreshToken.Token,
                 Expires = savedRefreshToken.ExpiresAt,
                 Enable = savedRefreshToken.Enable,
                 Email = savedRefreshToken.Email
@@ -66,7 +70,7 @@ namespace DailyQuoteManager.Application.Services.Auth
 
             return new TokenResponseDto(
                 token.AccessToken,
-                newRefreshToken.Token);
+                RefreshTokens.Token);
         }
 
         public async Task<RefreshToken?> GetByTokenAsync(string token)
