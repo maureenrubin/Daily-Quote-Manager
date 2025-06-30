@@ -35,7 +35,6 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
 
             try
             {
-                // Try reading from cookies
                 token = await cookiesServices.GetCookies(tokenKey);
             }
             catch (InvalidOperationException ex)
@@ -47,8 +46,11 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
             {
                 try
                 {
-                    // Fallback to localStorage if cookie not found
-                    token = await jsRuntime.InvokeAsync<string>("localStorage.getItem", tokenKey);
+                    // Only try JS interop if runtime is ready
+                    if (jsRuntime is not IJSInProcessRuntime) // runtime is async and safe
+                    {
+                        token = await jsRuntime.InvokeAsync<string>("localStorage.getItem", tokenKey);
+                    }
                 }
                 catch (InvalidOperationException ex)
                 {

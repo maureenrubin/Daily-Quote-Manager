@@ -1,4 +1,12 @@
-﻿@inherits LayoutComponentBase
+﻿@using DailyQuoteManager.Client.InterfacesClient.Auth
+
+
+@inherits LayoutComponentBase
+
+@inject AuthenticationStateProvider AuthStateProvider
+@inject IAuthClientService AuthService
+@inject NavigationManager NavigationManager
+
 
 <MudThemeProvider />
 <MudPopoverProvider />
@@ -7,7 +15,15 @@
 
 <MudLayout>
     <MudAppBar Elevation="4">
-        <MudText Typo="Typo.h6"> Daily Quote Manager </MudText>
+        <MudText Typo="Typo.h6" Class="mr-4"> Daily Quote Manager </MudText>
+        @if (!string.IsNullOrEmpty(UserName))
+        {
+            <MudText Typo="Typo.subtitle2" Class="text-white">Hello, @UserName (@UserRole)</MudText>
+        }
+
+        <MudSpacer />
+
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="LogoutAsync">Logout</MudButton>
     </MudAppBar>
 
     <MudMainContent>
@@ -17,3 +33,25 @@
     </MudMainContent>
 </MudLayout>
 
+@code {
+    private string UserName = string.Empty;
+    private string UserRole = string.Empty;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity?.IsAuthenticated ?? false)
+        {
+            UserName = user.Identity.Name ?? user.FindFirst(ClaimTypes.Name)?.Value ?? "User";
+            UserRole = user.FindFirst(ClaimTypes.Role)?.Value ?? "Unknown";
+        }
+    }
+
+    private async Task LogoutAsync()
+    {
+        await AuthService.Logoutasync();
+        NavigationManager.NavigateTo("/login", forceLoad: true);
+    }
+}

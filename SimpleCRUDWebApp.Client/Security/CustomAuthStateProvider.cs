@@ -1,6 +1,5 @@
 ﻿using DailyQuoteManager.Client.InterfacesClient.Auth;
 using Microsoft.AspNetCore.Components.Authorization;
-using System.Buffers.Text;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text.Json;
@@ -34,7 +33,7 @@ namespace DailyQuoteManager.Client.Security
             }
         }
 
-        public async Task NotifyUserAuthenticationStateChange()
+        public async Task NotifyUserAuthentication()
         {
             var token = await tokenService.GetToken();
             var identity = new ClaimsIdentity(ParseClaimsFromJwt(token), "jwt");
@@ -53,6 +52,8 @@ namespace DailyQuoteManager.Client.Security
 
             foreach(var kvp in keyValuePairs!)
             {
+                var key = kvp.Key == "role" ? ClaimTypes.Role : kvp.Key;
+
                 if(kvp.Value is JsonElement element && element.ValueKind == JsonValueKind.Array)
                 {
                     foreach (var item in element.EnumerateArray())

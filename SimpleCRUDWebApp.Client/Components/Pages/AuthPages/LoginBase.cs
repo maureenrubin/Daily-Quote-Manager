@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components;
 using DailyQuoteManager.Client.Common.Responses;
 using DailyQuoteManager.Client.Utilities;
 using System.Security.Claims;
+using Microsoft.Extensions.Logging;
 
 namespace DailyQuoteManager.Client.Components.Pages.AuthPages
 {
@@ -37,32 +38,37 @@ namespace DailyQuoteManager.Client.Components.Pages.AuthPages
 
                 if (loginSuccess)
                 {
-                    await customAuthStateProvider.NotifyUserAuthenticationStateChange();
+
+                    await customAuthStateProvider.NotifyUserAuthentication();
+
+
                     var authState = await customAuthStateProvider.GetAuthenticationStateAsync();
                     var user = authState.User;
 
                     var roleClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
                     var role = roleClaim?.Value ?? string.Empty;
-                   
-                    if(role == "User")
+
+                    Logger.LogInformation($"Logged in user with role: {role}");
+
+
+                    if (role == "User")
                     {
                         Navigation.NavigateTo("/dashboard");
                     }
                     else
                     {
-                        Response = Response with { ErrorMessage = "Role is not recognized." };
+                        Response = Response with { ErrorMessage = "Invalid login credentials." };
                     }
                 }
                 else
                 {
-                    Logger.LogWarning("Login faild: Invalid credentials.");
-                    Response = new Response(ErrorMessage: "Invalid email or password", MessageType: "warning");
+                    Response = Response with { ErrorMessage = "Invalid login credentials." }; Response = new Response(ErrorMessage: "Invalid email or password", MessageType: "warning");
                 }
             }
             catch (Exception ex)
             {
-                Logger.LogError(ex, "An unexpected error occurred during login.");
-                Response = new Response(ErrorMessage: "Unexpected error. Please try again later.", MessageType: "error");
+                Response = Response with { ErrorMessage = "An error occurred while processing your request." };
+                Logger.LogError(ex, "Error during login attempt");
             }
             finally
             {

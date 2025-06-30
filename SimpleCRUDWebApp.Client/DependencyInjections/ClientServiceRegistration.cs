@@ -11,7 +11,7 @@ using MudBlazor.Services;
 
 namespace DailyQuoteManager.Client.DependencyInjections
 {
-    public static class DependencyInjection
+    public static class ClientServiceRegistration
     {
         #region Public Methods
 
@@ -61,9 +61,11 @@ namespace DailyQuoteManager.Client.DependencyInjections
             services.AddScoped<ITokenClientService, TokenClientService>();
             services.AddScoped<IRefreshTokenClientService, RefreshTokenClientService>();
             services.AddScoped<ICookieClientService, CookieClientService>();
-            services.AddScoped<JwtHttpMessageHandler>();
-            services.AddScoped<CustomAuthStateProvider>();
+
+
             services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+            services.AddScoped<CustomAuthStateProvider>();
+            services.AddScoped<JwtHttpMessageHandler>();
 
         }
 

@@ -19,7 +19,7 @@
 
                 @if (!string.IsNullOrEmpty(Response.ErrorMessage))
                 {
-                    <MudAlert Severity="@(Response.MessageType == "warning" ? Severity.Warning : Severity.Error)" 
+                    <MudAlert Severity="@(Response.MessageType == "warning" ? Severity.Warning)" 
                               Variant="Variant.Filled"
                               Class="mb-4">
                         <MudAlert>@Response.ErrorMessage</MudAlert>

@@ -33,7 +33,7 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
         {
             try
             {
-                await jSRuntime.InvokeVoidAsync("setCookie", key);
+                await jSRuntime.InvokeVoidAsync("setCookie", key, value, days);
             }
             catch (InvalidOperationException)
             {

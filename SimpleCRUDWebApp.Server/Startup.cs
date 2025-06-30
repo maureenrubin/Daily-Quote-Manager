@@ -53,7 +53,7 @@ namespace DailyQuoteManager.Api
             }
 
 
-            app.UseStaticFiles();
+
             app.UseCors("AllowBlazorApp");
             app.UseHttpsRedirection();
             app.UseAuthentication();

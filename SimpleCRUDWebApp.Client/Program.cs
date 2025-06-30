@@ -1,5 +1,7 @@
 using DailyQuoteManager.Client.Components;
 using DailyQuoteManager.Client.DependencyInjections;
+using DailyQuoteManager.Client.Security;
+using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
 
 
@@ -10,6 +12,10 @@ builder.Services.AddServices(builder.Configuration);
 
 builder.Services.AddMudServices();
 builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
+builder.Services.AddCascadingAuthenticationState();
+builder.Services.AddAuthorizationCore();
+
 builder.Services.AddAuthentication("Cookies")
     .AddCookie("Cookies", options =>
     {

@@ -27,14 +27,14 @@ namespace DailyQuoteManager.Client.Security
         {
             try
             {
-                var token = Request.Cookies["access_token"];
+                var token = Request.Cookies["_accessToken"];
                 if (string.IsNullOrEmpty(token))
                 {
-                    return Task.FromResult(AuthenticateResult.NoResult());
+                    return Task.FromResult(AuthenticateResult.Fail("Missing Token"));
                 }
 
                 var readJWT = new JwtSecurityTokenHandler().ReadJwtToken(token);
-                var identity = new ClaimsIdentity(readJWT.Claims, "JWT");
+                var identity = new ClaimsIdentity(readJWT.Claims, Scheme.Name);
                 var principals = new ClaimsPrincipal(identity);
 
                 var ticket = new AuthenticationTicket(principals, Scheme.Name);
