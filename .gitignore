@@ -1,11 +1,91 @@
-# Ignore Visual Studio folders
+# -------------------------
+# Visual Studio and IDEs
+# -------------------------
 .vs/
-obj/
-bin/
-
-# Ignore user-specific files
+.vscode/
+.idea/
 *.user
 *.suo
 *.userosscache
 *.sln.docstates
+
+# -------------------------
+# Build outputs
+# -------------------------
+bin/
+obj/
+out/
+Generated_Code/
+
+# -------------------------
+# ASP.NET Core / App Settings
+# -------------------------
+appsettings.json
+appsettings.*.json
+secrets.json
+*.db
+*.sqlite
+*.mdf
+*.ldf
 /SimpleCRUDWebApp.Server/appsettings.json
+
+# -------------------------
+# EF Core Migrations
+# -------------------------
+SimpleCRUDWebApp.Infastructure/Migrations/
+
+# -------------------------
+# NuGet / Package Artifacts
+# -------------------------
+*.nupkg
+*.snupkg
+*.nuspec
+packages/
+project.lock.json
+project.fragment.lock.json
+
+# -------------------------
+# Logs and Test Results
+# -------------------------
+*.log
+Logs/
+logs/
+TestResults/
+*.coverage
+*.coveragexml
+
+# -------------------------
+# Publish Artifacts
+# -------------------------
+*.Publish.xml
+*.pubxml
+*.pfx
+*.key
+
+# -------------------------
+# IIS Express
+# -------------------------
+*.vspscc
+*.vssscc
+*.dbmdl
+
+# -------------------------
+# OS Generated Files
+# -------------------------
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# -------------------------
+# Temporary Files
+# -------------------------
+*.tmp
+*.bak
+*.old
+*.swp
+
+# -------------------------
+# Optional: Node Modules
+# -------------------------
+node_modules/
