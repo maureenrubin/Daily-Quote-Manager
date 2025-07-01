@@ -32,20 +32,18 @@ namespace DailyQuoteManager.Application.Services.Auth
 
             var hashedPassword = passwordHasherService.HashPassword(request.Password);
 
-            var roleToAssign = string.IsNullOrWhiteSpace(request.Role) ? "User" : request.Role;
-
             var newUser = mapper.Map<ApplicationUser>(request);
             newUser.PasswordHash = hashedPassword;
             newUser.CreatedAt = DateTime.UtcNow;
-            newUser.Role = roleToAssign;
+            newUser.Role = string.IsNullOrWhiteSpace(request.Role) ? "DefaultUser" : request.Role;
 
 
             await userRepository.AddAsync(newUser);
             await unitOfWork.SaveChangesAsync();
 
-            logger.LogInformation("User registered successfully with role: {Role}", roleToAssign);
+            logger.LogInformation("User registered successfully with role: {Role}", newUser.Role);
 
-            return (true, $"Registration successful as {roleToAssign}.");
+            return (true, $"Registration successful as {newUser.Role}.");
         }
 
         public async Task<TokenResponseDto> LoginAsync(string email, string password)
@@ -86,7 +84,7 @@ namespace DailyQuoteManager.Application.Services.Auth
             if (string.IsNullOrEmpty(refreshToken))
                 return new Response
                 {
-                    IsSuccess = false,
+                    Success = false,
                     ErrorMessage = "No refresh token provided."
                 };
 
@@ -95,7 +93,7 @@ namespace DailyQuoteManager.Application.Services.Auth
             {
                 return new Response
                 {
-                    IsSuccess = false,
+                    Success = false,
                     ErrorMessage = "Token not found or already disabled."
                 };
             }
@@ -103,7 +101,7 @@ namespace DailyQuoteManager.Application.Services.Auth
             await unitOfWork.SaveChangesAsync();
             return new Response
             {
-                IsSuccess = true,
+                Success = true,
                 Message = "Token disabled successfully."
             };
         }

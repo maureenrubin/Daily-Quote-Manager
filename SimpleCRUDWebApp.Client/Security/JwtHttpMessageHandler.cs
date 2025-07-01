@@ -1,32 +1,18 @@
-﻿using DailyQuoteManager.Client.InterfacesClient.Auth;
-using System.Net.Http.Headers;
+﻿
 namespace DailyQuoteManager.Client.Security
 {
-    public class JwtHttpMessageHandler : DelegatingHandler
+    public class JwtHttpMessageHandler(IHttpContextAccessor httpContextAccessor) : DelegatingHandler
     {
-        #region Fields
-        private readonly ITokenClientService _tokenService;
-        #endregion Fields
-
-        #region Public Constructors
-        public JwtHttpMessageHandler(ITokenClientService tokenService)
-        {
-            _tokenService = tokenService;
-        }
-        #endregion Public Constructors
-
+     
         #region Protected Methods
 
-        
-        protected override async Task<HttpResponseMessage> SendAsync(
-            HttpRequestMessage request,
-            CancellationToken cancellationToken)
+        protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var token = await _tokenService.GetToken();
+            var token = httpContextAccessor.HttpContext?.Request.Cookies["_accesstoken"];
 
-            if (!string.IsNullOrEmpty(token))
+            if (!string.IsNullOrWhiteSpace(token))
             {
-                request.Headers.Authorization = new AuthenticationHeaderValue("Bearer", token);
+                request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", token);
             }
 
             return await base.SendAsync(request, cancellationToken);

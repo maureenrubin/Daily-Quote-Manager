@@ -24,7 +24,7 @@ namespace DailyQuoteManager.Domain.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [Required]
-        public string Role { get; set; } = "User";
+        public string Role { get; set; } = string.Empty;
 
         [JsonIgnore]
         public virtual ICollection<Quotes> AddedQuotes { get; set; } = new List<Quotes>();

@@ -1,4 +1,5 @@
 ﻿using DailyQuoteManager.Client.InterfacesClient.Auth;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -7,7 +8,9 @@ using System.Text.Json;
 namespace DailyQuoteManager.Client.Security
 {
     public class CustomAuthStateProvider
-        (ITokenClientService tokenService) : AuthenticationStateProvider
+        (ITokenClientService tokenService,
+         NavigationManager navigationManager,
+         IAuthClientService authService) : AuthenticationStateProvider
     {
         #region Public Methods
 
@@ -16,7 +19,7 @@ namespace DailyQuoteManager.Client.Security
             try
             {
                 var token = await tokenService.GetToken();
-                if (string.IsNullOrEmpty(token))
+                if (string.IsNullOrWhiteSpace(token))
                 {
                     return MarkAsUnauthorize();
                 }
@@ -42,6 +45,13 @@ namespace DailyQuoteManager.Client.Security
             NotifyAuthenticationStateChanged(Task.FromResult(new AuthenticationState(user)));
         }
 
+        public async Task Logout()
+        {
+            await authService.Logoutasync();
+            navigationManager.NavigateTo("/login");
+        }
+
+
         private IEnumerable<Claim> ParseClaimsFromJwt(string jwt)
         {
             var claims = new List<Claim>();
@@ -51,8 +61,7 @@ namespace DailyQuoteManager.Client.Security
             var keyValuePairs = JsonSerializer.Deserialize<Dictionary<string, object>>(jsonBytes);
 
             foreach(var kvp in keyValuePairs!)
-            {
-                var key = kvp.Key == "role" ? ClaimTypes.Role : kvp.Key;
+            { 
 
                 if(kvp.Value is JsonElement element && element.ValueKind == JsonValueKind.Array)
                 {

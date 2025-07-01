@@ -1,6 +1,5 @@
 ﻿using DailyQuoteManager.Client.InterfacesClient.Auth;
 using Microsoft.JSInterop;
-using Newtonsoft.Json.Linq;
 
 namespace DailyQuoteManager.Client.ServicesClient.Auth
 {
@@ -31,7 +30,7 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
 
         public async Task<string> GetToken()
         {
-            string token = null!;
+            string token = null;
 
             try
             {
@@ -39,27 +38,24 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
             }
             catch (InvalidOperationException ex)
             {
-                Console.Error.WriteLine($"[TokenService] Failed to get token from cookies: {ex.Message}");
+                Console.Error.WriteLine($"[TokenClientService] Failed to get token from cookies: {ex.Message}");
             }
 
             if (string.IsNullOrEmpty(token))
             {
                 try
                 {
-                    // Only try JS interop if runtime is ready
-                    if (jsRuntime is not IJSInProcessRuntime) // runtime is async and safe
-                    {
-                        token = await jsRuntime.InvokeAsync<string>("localStorage.getItem", tokenKey);
-                    }
+                    token = await jsRuntime.InvokeAsync<string>("localStorage.getItem", tokenKey);
                 }
                 catch (InvalidOperationException ex)
                 {
-                    Console.Error.WriteLine($"[TokenService] Failed to get token from localStorage: {ex.Message}");
+                    Console.Error.WriteLine($"[TokenClientService] Failed to get token from localStorage: {ex.Message}");
                 }
             }
 
-            Console.WriteLine($"[TokenService] Loaded token: {(token == null ? "null" : token.Substring(0, Math.Min(10, token.Length)) + "...")}");
-            return token!;
+            Console.WriteLine($"[TokenClientService] Loaded token: {(token == null ? "null" : token.Substring(0, Math.Min(10, token.Length)) + "...")}");
+           
+            return token;
         }
 
 

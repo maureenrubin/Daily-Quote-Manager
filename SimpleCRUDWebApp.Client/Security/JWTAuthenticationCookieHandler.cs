@@ -25,28 +25,22 @@ namespace DailyQuoteManager.Client.Security
 
         protected override Task <AuthenticateResult> HandleAuthenticateAsync()
         {
-            try
-            {
-                var token = Request.Cookies["_accessToken"];
+                var token = Context.Request.Cookies["_accessToken"];
+               
                 if (string.IsNullOrEmpty(token))
                 {
                     return Task.FromResult(AuthenticateResult.Fail("Missing Token"));
                 }
 
-                var readJWT = new JwtSecurityTokenHandler().ReadJwtToken(token);
-                var identity = new ClaimsIdentity(readJWT.Claims, Scheme.Name);
+                var handler = new JwtSecurityTokenHandler();
+                var jwt = handler.ReadJwtToken(token);
+
+                var identity = new ClaimsIdentity(jwt.Claims, Scheme.Name);
                 var principals = new ClaimsPrincipal(identity);
 
                 var ticket = new AuthenticationTicket(principals, Scheme.Name);
                 return Task.FromResult(AuthenticateResult.Success(ticket));
 
-            }
-            catch (Exception ex)
-            {
-                Logger.LogWarning(ex, "JWT validation failed");
-                return Task.FromResult(AuthenticateResult.Fail("Invalid token."));
-            }
-          
         }
 
         protected override Task HandleChallengeAsync (AuthenticationProperties properties)

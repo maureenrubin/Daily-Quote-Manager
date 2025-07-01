@@ -1,11 +1,10 @@
-﻿using DailyQuoteManager.Client.InterfacesClient.Auth;
+﻿using DailyQuoteManager.Client.Common.Responses;
 using DailyQuoteManager.Client.DTOs.Auth.Login;
+using DailyQuoteManager.Client.InterfacesClient.Auth;
 using DailyQuoteManager.Client.Security;
-using Microsoft.AspNetCore.Components;
-using DailyQuoteManager.Client.Common.Responses;
 using DailyQuoteManager.Client.Utilities;
+using Microsoft.AspNetCore.Components;
 using System.Security.Claims;
-using Microsoft.Extensions.Logging;
 
 namespace DailyQuoteManager.Client.Components.Pages.AuthPages
 {
@@ -51,7 +50,7 @@ namespace DailyQuoteManager.Client.Components.Pages.AuthPages
                     Logger.LogInformation($"Logged in user with role: {role}");
 
 
-                    if (role == "User")
+                    if (role == "DefaultUser")
                     {
                         Navigation.NavigateTo("/dashboard");
                     }

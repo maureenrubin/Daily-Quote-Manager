@@ -13,23 +13,9 @@ namespace DailyQuoteManager.Client.DependencyInjections
 {
     public static class ClientServiceRegistration
     {
-        #region Public Methods
-
-        public static IServiceCollection AddServices(
-            this IServiceCollection services,
-            IConfiguration configuration)
-        {
-            AddPersistence(services, configuration);
-
-            return services;
-        }
-
-        #endregion Public Methods 
-
-
-        #region Private Methods 
+        #region Public Methods 
         
-        private static void AddPersistence(IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddHttpClient("ApiClient", client =>
             {
@@ -42,16 +28,15 @@ namespace DailyQuoteManager.Client.DependencyInjections
                 options.EventsType = typeof(CookieEvents);
             });
 
+            services.AddRazorComponents()
+                .AddInteractiveServerComponents();
 
             services.AddAuthentication()
             .AddScheme<CustomOption, JWTAuthenticationCookieHandler>("JWTAuth", options => { });
-            
+
             services.AddMudServices();
             services.AddCascadingAuthenticationState();
             services.AddHttpContextAccessor();
-
-            services.AddRazorComponents()
-                .AddInteractiveServerComponents();
 
 
             services.AddScoped<IAccountManagementClientService, AccountManagementClientService>();
@@ -67,10 +52,13 @@ namespace DailyQuoteManager.Client.DependencyInjections
             services.AddScoped<CustomAuthStateProvider>();
             services.AddScoped<JwtHttpMessageHandler>();
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            return services;
+
         }
 
-        #endregion Private Methods 
-
+        #endregion Public Methods 
 
 
     }

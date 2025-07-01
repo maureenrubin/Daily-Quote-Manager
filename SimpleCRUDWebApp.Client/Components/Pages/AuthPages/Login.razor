@@ -1,6 +1,7 @@
 ﻿@page "/login"
 @inherits LoginBase
 @layout MainLayout
+@rendermode InteractiveServer
 
 <PageTitle>Login - Daily Quote Manager</PageTitle>
 
@@ -19,7 +20,7 @@
 
                 @if (!string.IsNullOrEmpty(Response.ErrorMessage))
                 {
-                    <MudAlert Severity="@(Response.MessageType == "warning" ? Severity.Warning)" 
+                    <MudAlert Severity="@(Response.MessageType == "warning" ? Severity.Warning : Severity.Error)" 
                               Variant="Variant.Filled"
                               Class="mb-4">
                         <MudAlert>@Response.ErrorMessage</MudAlert>

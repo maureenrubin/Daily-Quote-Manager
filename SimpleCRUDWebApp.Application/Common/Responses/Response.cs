@@ -2,7 +2,6 @@
 {
     public record Response(
 
-        bool IsSuccess = false,
         bool Success = false,
         string ErrorMessage = "",
         string Message = "",

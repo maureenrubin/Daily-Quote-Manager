@@ -32,7 +32,7 @@ namespace DailyQuoteManager.Api.Controllers.Auth
 
                 return BadRequest(new Response
                 {
-                    IsSuccess = false,
+                    Success = false,
                     ErrorMessage = "Validation failed.",
                     ValidationErrors = errors
                 });
@@ -44,14 +44,14 @@ namespace DailyQuoteManager.Api.Controllers.Auth
             {
                 return BadRequest(new Response
                 {
-                    IsSuccess = false,
+                    Success = false,
                     ErrorMessage = message
                 });
             }
 
             return Ok(new Response
             {
-                IsSuccess = true,
+                Success = true,
                 Message = message
             });
         }
@@ -77,7 +77,7 @@ namespace DailyQuoteManager.Api.Controllers.Auth
             {
                 return BadRequest(new Response
                 {
-                    IsSuccess = false,
+                    Success = false,
                     ErrorMessage = "RefreshToken is required."
                 });
             }
@@ -88,7 +88,7 @@ namespace DailyQuoteManager.Api.Controllers.Auth
             {
                 return BadRequest(new Response
                 {
-                    IsSuccess = false,
+                    Success = false,
                     ErrorMessage = "Failed to refresh the token. Token may be expired or invalid"
                 });
             }
@@ -99,13 +99,13 @@ namespace DailyQuoteManager.Api.Controllers.Auth
             {
                 return BadRequest(new Response
                 {
-                    IsSuccess = false,
+                    Success = false,
                     ErrorMessage = "Failed to refresh the token. Token may be expired or invalid."
                 });
             }
             return Ok(new Response 
             { 
-                IsSuccess = true,
+                Success = true,
                 Message = "Token refreshed successfully",
                 Data = tokenResponse
             });
@@ -118,7 +118,7 @@ namespace DailyQuoteManager.Api.Controllers.Auth
             var refreshToken = Request.Cookies["refreshtoken"];
             var result = await authService.LogoutAsync(refreshToken);
 
-            if (!result.IsSuccess)
+            if (!result.Success)
             {
                 return BadRequest(result.ErrorMessage);
             }

@@ -14,7 +14,7 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
             }
             catch (InvalidOperationException)
             {
-                return null!;
+                return null;
             }
         }
 

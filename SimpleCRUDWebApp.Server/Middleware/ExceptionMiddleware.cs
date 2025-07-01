@@ -36,7 +36,7 @@ namespace DailyQuoteManager.Api.Middleware
 
             var errorResponse = new Response
             {
-                IsSuccess = false,
+                Success = false,
                 ErrorMessage = GetErrorMessage(exception, context.Response.StatusCode)
             };
 

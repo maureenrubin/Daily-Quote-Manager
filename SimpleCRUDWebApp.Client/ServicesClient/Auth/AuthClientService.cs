@@ -18,7 +18,7 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
         #endregion Fields
 
         #region Public Constructors
-
+ 
         public AuthClientService(
             ITokenClientService tokenService,
             IRefreshTokenClientService refreshTokenService,
@@ -29,7 +29,7 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
             _refreshTokenService = refreshTokenService;
             _httpClient = httpClientFactory.CreateClient("ApiClient");
             _logger = logger;
-
+             
         }
 
         #endregion Public Constructors
@@ -44,7 +44,7 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
 
                 var responseContent = await response.Content.ReadAsStringAsync();
 
-                if (!response.IsSuccessStatusCode)
+                if (response.IsSuccessStatusCode)
                 {
 
                     var errorDto = JsonConvert.DeserializeObject<Response>(responseContent);
