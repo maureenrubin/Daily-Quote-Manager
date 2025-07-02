@@ -32,7 +32,7 @@ secrets.json
 # -------------------------
 # EF Core Migrations
 # -------------------------
-SimpleCRUDWebApp.Persistence/Migrations/
+DailyQuoteManager.Persistence/Migrations/
 
 # -------------------------
 # NuGet / Package Artifacts
