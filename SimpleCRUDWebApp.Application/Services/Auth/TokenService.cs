@@ -41,12 +41,12 @@ namespace DailyQuoteManager.Application.Services.Auth
             return new JsonWebTokenHandler().CreateToken(tokenDescriptor);
         }
 
-        public RefreshToken GenerateRefreshToken()
+        public RefreshTokens GenerateRefreshToken()
         {
-            var refreshToken = new RefreshToken
+            var refreshToken = new RefreshTokens
             {
                 RefreshTokenId = Guid.NewGuid(),
-                Token = Guid.NewGuid().ToString(),
+                RefreshToken = Guid.NewGuid().ToString(),
                 ExpiresAt = DateTime.UtcNow.AddMonths(1),
                 CreatedAt = DateTime.UtcNow,
                 Enable = true,
@@ -60,7 +60,7 @@ namespace DailyQuoteManager.Application.Services.Auth
             var accessToken = GenerateAccessToken(user);
             var refreshToken = GenerateRefreshToken();
 
-            return new TokenResponseDto(accessToken, refreshToken.Token);
+            return new TokenResponseDto(accessToken, refreshToken.RefreshToken);
         }
 
         #endregion Public Methods

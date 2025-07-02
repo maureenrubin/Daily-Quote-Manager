@@ -16,7 +16,7 @@ namespace DailyQuoteManager.Persistence.DatabaseContext
         #region DbSets / Properties
 
         public DbSet<ApplicationUser> ApplicationUsers { get; set; } = null!;
-        public DbSet<RefreshToken> RefreshTokens { get; set; } = null!;
+        public DbSet<RefreshTokens> RefreshTokens { get; set; } = null!;
         public DbSet<Quotes> Quotes { get; set; } = null!;
         public DbSet<FavoriteQuote> FavoriteQuotes { get; set; } = null!;
         public DbSet<DailyQuote> DailyQuotes { get; set; } = null!;

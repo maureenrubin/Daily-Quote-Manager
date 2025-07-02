@@ -3,14 +3,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DailyQuoteManager.Domain.Entities
 {
-    public class RefreshToken
+    public class RefreshTokens
     {
         #region Properties
 
         [Key]
         public Guid RefreshTokenId { get; set; } = Guid.NewGuid();
 
-        public string Token { get; set; } = string.Empty;
+        public string RefreshToken { get; set; } = string.Empty;
 
         public DateTime ExpiresAt { get; set; }
 
@@ -19,7 +19,7 @@ namespace DailyQuoteManager.Domain.Entities
         public DateTime CreatedAt { get; set; }
 
         [Required]
-        public string Email { get; set; } = string.Empty;
+        public string Email { get; set; } = string.Empty; 
 
 
         [Required]

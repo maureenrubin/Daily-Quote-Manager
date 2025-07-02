@@ -4,15 +4,15 @@ namespace DailyQuoteManager.Application.Common.Responses
 {
     public record AuthResponseDto
     {
-        public string AccessToken { get; set; } = string.Empty;
+        public string AccessToken { get; init; } 
 
-        public string RefreshToken { get; set; }
+        public string RefreshToken { get; init; }
 
-        public string Email { get; set; } = string.Empty;
+        public string Email { get; init; }
 
-        public string Role { get; set; } = string.Empty;
+        public string Role { get; init; } 
 
-        public DateTime TokenExpired { get; set; } = DateTime.UtcNow;
+        public DateTime TokenExpired { get; init; }
 
         [JsonConstructor]
         public AuthResponseDto(string accessToken, string refreshToken, string email, string role, DateTime tokenExpired)

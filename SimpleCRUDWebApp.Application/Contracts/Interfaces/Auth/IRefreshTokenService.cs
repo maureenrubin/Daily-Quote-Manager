@@ -9,8 +9,8 @@ namespace DailyQuoteManager.Application.Contracts.Interfaces.Auth
 
        Task<bool> DisableUserTokenAsync(string token);
 
-       Task<RefreshToken?> GetByTokenAsync(string token);
+       Task<RefreshTokens?> GetByTokenAsync(string token);
 
-       Task<RefreshToken?> CreateRefreshTokenAsync(ApplicationUser user, string token);
+       Task<RefreshTokens?> CreateRefreshTokenAsync(ApplicationUser user, string token);
     }
 }

@@ -9,7 +9,7 @@ namespace DailyQuoteManager.Application.Contracts.Interfaces.Auth
 
         string GenerateAccessToken(ApplicationUser user);
 
-        RefreshToken GenerateRefreshToken();
+        RefreshTokens GenerateRefreshToken();
 
         TokenResponseDto GenerateToken(ApplicationUser user);
         #endregion Public Methods

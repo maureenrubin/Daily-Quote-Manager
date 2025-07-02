@@ -52,13 +52,13 @@ namespace DailyQuoteManager.Application.Services.Auth
             if(user == null)
             {
                 logger.LogWarning("Login failed: User not found.");
-                return null!;
+                return null;
             }
 
             if(!passwordHasherService.VerifyPassword(password, user.PasswordHash))
             {
                 logger.LogWarning("Login failed: Incorrect password.");
-                return null!;
+                return null;
             }
 
             var token = tokenService.GenerateToken(user);
@@ -68,14 +68,13 @@ namespace DailyQuoteManager.Application.Services.Auth
             if(newRefreshToken == null)
             {
                 logger.LogError("Failed to create refresh token during login.");
-                return null!;
+                return null;
             }
 
-            await unitOfWork.SaveChangesAsync();
 
             logger.LogInformation("User logged in successfully.");
 
-            return new TokenResponseDto(token.AccessToken, newRefreshToken.Token);
+            return new TokenResponseDto(token.AccessToken, newRefreshToken.RefreshToken);
 
         }
 

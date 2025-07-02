@@ -42,9 +42,9 @@ namespace DailyQuoteManager.Application.Services.Auth
             await DisableUserTokenAsync(refreshToken);
 
           
-            var RefreshTokens = new RefreshToken
+            var RefreshTokens = new RefreshTokens
             {
-                Token = token.RefreshToken,
+                RefreshToken = token.RefreshToken,
                 ExpiresAt = DateTime.UtcNow.AddMonths(1),
                 AppUserId = refreshTokenEntity.AppUserId,
                 Enable = true,
@@ -62,7 +62,7 @@ namespace DailyQuoteManager.Application.Services.Auth
 
             var refreshTokenDto = new RefreshTokenDto
             {
-                RefreshToken = savedRefreshToken.Token,
+                RefreshToken = savedRefreshToken.RefreshToken,
                 Expires = savedRefreshToken.ExpiresAt,
                 Enable = savedRefreshToken.Enable,
                 Email = savedRefreshToken.Email
@@ -70,10 +70,10 @@ namespace DailyQuoteManager.Application.Services.Auth
 
             return new TokenResponseDto(
                 token.AccessToken,
-                RefreshTokens.Token);
+                RefreshTokens.RefreshToken);
         }
 
-        public async Task<RefreshToken?> GetByTokenAsync(string token)
+        public async Task<RefreshTokens?> GetByTokenAsync(string token)
         {
             return await refreshTokenRepository.GetByTokenAsync(token);
         }
@@ -93,11 +93,11 @@ namespace DailyQuoteManager.Application.Services.Auth
             return true;
         }
 
-        public async Task<RefreshToken?> CreateRefreshTokenAsync(ApplicationUser user, string token)
+        public async Task<RefreshTokens?> CreateRefreshTokenAsync(ApplicationUser user, string token)
         {
-            var newRefreshToken = new RefreshToken
+            var newRefreshToken = new RefreshTokens
             {
-                Token = token,
+                RefreshToken = token,
                 ExpiresAt = DateTime.UtcNow.AddMonths(1),
                 AppUserId = user.AppUserId,
                 Enable = true,

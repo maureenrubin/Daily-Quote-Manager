@@ -17,7 +17,7 @@ namespace DailyQuoteManager.Application.Common.Mapping.Profiles
                 .ForMember(dest => dest.PasswordHash, opt => opt.Ignore())
                 .ForMember(dest => dest.CreatedAt, opt => opt.Ignore());
           
-            CreateMap<RefreshTokenDto, RefreshToken>()
+            CreateMap<RefreshTokenDto, RefreshTokens>()
                 .ForMember(dest => dest.ExpiresAt, opt => opt.MapFrom(src => src.Expires))
                 .ForMember(dest => dest.ApplicationUser, opt => opt.Ignore()) 
                 .ForMember(dest => dest.AppUserId, opt => opt.Ignore()) 

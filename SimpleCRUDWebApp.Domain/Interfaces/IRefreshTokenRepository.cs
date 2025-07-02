@@ -7,15 +7,15 @@ namespace DailyQuoteManager.Domain.Interfaces
     {
         #region Public Methods 
 
-        Task<RefreshToken?> AddAsync(RefreshToken refreshToken, Guid appUserId);
+        Task<RefreshTokens?> AddAsync(RefreshTokens refreshToken, Guid appUserId);
 
-        Task<RefreshToken?> GetByTokenAsync(string token);
+        Task<RefreshTokens?> GetByTokenAsync(string token);
 
         Task<bool> DisablerUserTokenAsync(string token);
 
         Task<bool> IsRefreshTokenValidAsync(string token);
 
-        Task<IEnumerable<RefreshToken>> GetByTokenListAsync(string token);
+        Task<IEnumerable<RefreshTokens>> GetByTokenListAsync(string token);
 
         #endregion Public Methods
 

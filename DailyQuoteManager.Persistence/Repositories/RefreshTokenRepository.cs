@@ -7,12 +7,12 @@ using Microsoft.EntityFrameworkCore;
 namespace DailyQuoteManager.Persistence.Repositories
 {
     public class RefreshTokenRepository(AppDbContext _dbContext,
-        IBaseRepository<RefreshToken> repository) : IRefreshTokenRepository
+        IBaseRepository<RefreshTokens> repository) : IRefreshTokenRepository
     {
         #region Public Methods 
 
 
-        public async Task<RefreshToken?> AddAsync(RefreshToken refreshToken, Guid appUserId)
+        public async Task<RefreshTokens?> AddAsync(RefreshTokens refreshToken, Guid appUserId)
         {
             refreshToken.AppUserId = appUserId;
 
@@ -20,16 +20,16 @@ namespace DailyQuoteManager.Persistence.Repositories
             return refreshToken;
         }
 
-        public async Task<RefreshToken?> GetByTokenAsync(string token)
+        public async Task<RefreshTokens?> GetByTokenAsync(string token)
         {
             return await _dbContext.RefreshTokens
                                  .Include(r => r.ApplicationUser)
-                                 .FirstOrDefaultAsync(r => r.Token == token);
+                                 .FirstOrDefaultAsync(r => r.RefreshToken == token);
         }
         public async Task <bool> DisablerUserTokenAsync(string token)
         {
             var refreshTokens = await _dbContext.RefreshTokens
-                .Where(r => r.Token == token)
+                .Where(r => r.RefreshToken == token)
                 .ToListAsync();
 
             if (refreshTokens.Count == 0)
@@ -46,16 +46,16 @@ namespace DailyQuoteManager.Persistence.Repositories
         public async Task<bool> IsRefreshTokenValidAsync(string token)
         {
             var isValid = await _dbContext.RefreshTokens
-                                .Where(r => r.Token == token && r.Enable && r.ExpiresAt >= DateTime.UtcNow.Date)
+                                .Where(r => r.RefreshToken == token && r.Enable && r.ExpiresAt >= DateTime.UtcNow.Date)
                                 .AnyAsync();
 
             return isValid;
         }
 
-        public async Task<IEnumerable<RefreshToken>> GetByTokenListAsync(string token)
+        public async Task<IEnumerable<RefreshTokens>> GetByTokenListAsync(string token)
         {
             return await _dbContext.RefreshTokens
-                .Where(r => r.Token == token)
+                .Where(r => r.RefreshToken == token)
                 .ToListAsync();
         }
 

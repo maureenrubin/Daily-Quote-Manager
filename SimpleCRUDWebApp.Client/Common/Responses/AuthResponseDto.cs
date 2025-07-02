@@ -1,20 +1,29 @@
 ﻿using Newtonsoft.Json;
-using System.Net.Http.Headers;
 
 public record AuthResponseDto
 {
-    [JsonProperty("accessToken")]
-    public string AccessToken { get; set; } = string.Empty;
 
-    [JsonProperty("refreshToken")]
-    public string RefreshToken { get; set; } = string.Empty;
+    public string AccessToken { get; init; }
+    public string RefreshToken { get; init; }
+    public string Email { get; init; }
+    public string Role { get; init; }
+    public DateTime TokenExpired { get; init; }
 
-    [JsonProperty("email")]
-    public string Email { get; set; } = string.Empty;
 
-    [JsonProperty("role")]
-    public string Role { get; set; } = string.Empty;
+    [JsonConstructor]
 
-    [JsonProperty("tokenExpired")]
-    public DateTime TokenExpired { get; set; } = DateTime.UtcNow;
+    public AuthResponseDto(string accessToken, string refreshToken, string email, string role, DateTime tokenExpired)
+    {
+        AccessToken = accessToken;
+        RefreshToken = refreshToken;
+        Email = email;
+        Role = role;
+        TokenExpired = tokenExpired;
+    }
+
+    public AuthResponseDto(string accessToken, string refreshToken, string email, string role) 
+        : this (accessToken, refreshToken, email, role, DateTime.UtcNow)
+    {
+
+    }
 }

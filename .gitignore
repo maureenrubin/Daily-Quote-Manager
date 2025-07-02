@@ -32,7 +32,7 @@ secrets.json
 # -------------------------
 # EF Core Migrations
 # -------------------------
-SimpleCRUDWebApp.Infastructure/Migrations/
+SimpleCRUDWebApp.Persistence/Migrations/
 
 # -------------------------
 # NuGet / Package Artifacts

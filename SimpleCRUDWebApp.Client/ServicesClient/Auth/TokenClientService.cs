@@ -36,10 +36,7 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
             {
                 token = await cookiesServices.GetCookies(tokenKey);
             }
-            catch (InvalidOperationException ex)
-            {
-                Console.Error.WriteLine($"[TokenClientService] Failed to get token from cookies: {ex.Message}");
-            }
+            catch (InvalidOperationException ex) { }
 
             if (string.IsNullOrEmpty(token))
             {
@@ -47,10 +44,7 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
                 {
                     token = await jsRuntime.InvokeAsync<string>("localStorage.getItem", tokenKey);
                 }
-                catch (InvalidOperationException ex)
-                {
-                    Console.Error.WriteLine($"[TokenClientService] Failed to get token from localStorage: {ex.Message}");
-                }
+                catch (InvalidOperationException ex) { }
             }
 
             Console.WriteLine($"[TokenClientService] Loaded token: {(token == null ? "null" : token.Substring(0, Math.Min(10, token.Length)) + "...")}");

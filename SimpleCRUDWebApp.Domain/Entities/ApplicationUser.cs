@@ -8,8 +8,7 @@ namespace DailyQuoteManager.Domain.Entities
         #region Properties
 
         [Key]
-        public Guid AppUserId { get; set; }
-
+        public Guid AppUserId { get; set; } = Guid.NewGuid();
         [Required]
         public string FullName { get; set; } = string.Empty;
 
@@ -36,7 +35,7 @@ namespace DailyQuoteManager.Domain.Entities
         public virtual ICollection<DailyQuote> DailyQuotes { get; set; } = new List<DailyQuote>();
 
         [JsonIgnore]
-        public virtual ICollection<RefreshToken> RefreshTokens { get; set; } = new List<RefreshToken>();
+        public virtual ICollection<RefreshTokens> RefreshTokens { get; set; } = new List<RefreshTokens>();
 
         #endregion Properties
     }

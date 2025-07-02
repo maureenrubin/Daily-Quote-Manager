@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DailyQuoteManager.Persistence.Configurations.UserManagement
 {
-    public class RefreshTokenConfig : IEntityTypeConfiguration<RefreshToken>
+    public class RefreshTokenConfig : IEntityTypeConfiguration<RefreshTokens>
     {
         #region Public Methods
 
-        public void Configure(EntityTypeBuilder<RefreshToken> builder)
+        public void Configure(EntityTypeBuilder<RefreshTokens> builder)
         {
             builder.HasKey(r => r.RefreshTokenId);
 
