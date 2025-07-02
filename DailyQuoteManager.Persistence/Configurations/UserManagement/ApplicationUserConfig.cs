@@ -20,7 +20,7 @@ namespace DailyQuoteManager.Persistence.Configurations.UserManagement
 
             //Quotes
             builder.HasMany(u => u.AddedQuotes)
-                   .WithOne(q => q.AddedByUser)
+                   .WithOne(q => q.ApplicationUser)
                    .HasForeignKey(q => q.AddedByUserId)
                    .OnDelete(DeleteBehavior.SetNull);
 

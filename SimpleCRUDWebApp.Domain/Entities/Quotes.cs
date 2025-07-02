@@ -34,7 +34,7 @@ namespace DailyQuoteManager.Domain.Entities
         #region Navigation Properties
 
         [ForeignKey(nameof(AddedByUserId))]
-        public virtual ApplicationUser? AddedByUser { get; set; }
+        public virtual ApplicationUser? ApplicationUser { get; set; }
 
         public virtual ICollection<FavoriteQuote> FavoritedByUsers { get; set; } = new List<FavoriteQuote>();
 

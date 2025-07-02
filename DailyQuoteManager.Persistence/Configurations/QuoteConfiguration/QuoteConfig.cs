@@ -13,7 +13,7 @@ namespace DailyQuoteManager.Persistence.Configurations.QuoteConfiguration
             builder.HasKey(q => q.QuoteId);
 
             //Quote added by user
-            builder.HasOne(q => q.AddedByUser)
+            builder.HasOne(q => q.ApplicationUser)
                    .WithMany(u => u.AddedQuotes)
                    .HasForeignKey(q => q.AddedByUserId)
                    .OnDelete(DeleteBehavior.Cascade);
