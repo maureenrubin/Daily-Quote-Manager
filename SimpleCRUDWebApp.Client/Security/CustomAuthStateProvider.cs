@@ -47,7 +47,7 @@ namespace DailyQuoteManager.Client.Security
 
         public async Task Logout()
         {
-            await authService.Logoutasync();
+            await authService.LogoutAsync();
             navigationManager.NavigateTo("/login");
         }
 

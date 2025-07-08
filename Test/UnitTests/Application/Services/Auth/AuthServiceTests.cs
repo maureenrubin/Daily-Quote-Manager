@@ -46,7 +46,7 @@ namespace Tests.UnitTests.Application.Services.Auth
                 FullName = "John Doe",
                 Email = "john@example.com",
                 Password = "Test1234!",
-                Role = "" // empty so it defaults to "User"
+                Role = "" 
             };
 
             var mappedUser = new ApplicationUser
@@ -66,9 +66,9 @@ namespace Tests.UnitTests.Application.Services.Auth
 
             // Assert
             Assert.True(result.Success);
-            Assert.Equal("Registration successful as User.", result.Message);
+            Assert.Equal("Registration successful as DefaultUser.", result.Message);
             Assert.Equal("hashed-password", mappedUser.PasswordHash);
-            Assert.Equal("User", mappedUser.Role);
+            Assert.Equal("DefaultUser", mappedUser.Role);
 
             _userRepo.Verify(r => r.AddAsync(It.IsAny<ApplicationUser>()), Times.Once);
             _unitOfWork.Verify(u => u.SaveChangesAsync(), Times.Once);

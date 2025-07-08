@@ -111,7 +111,7 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
         }
 
 
-        public async Task Logoutasync()
+        public async Task LogoutAsync()
         {
             var refreshToken = await _refreshTokenService.Get();
             _httpClient.DefaultRequestHeaders.Add("Cookie", $"_refreshToken={refreshToken}");

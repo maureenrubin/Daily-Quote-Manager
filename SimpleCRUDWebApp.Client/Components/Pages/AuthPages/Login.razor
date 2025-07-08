@@ -34,6 +34,7 @@
                         <MudContainer Class="mt-5">
                             <label class="block text-sm font-semibold mb-1">Email Address</label>
                             <MudTextField @bind-Value="Input.Email"
+                                          Autocomplete="email"
                                           T="string"
                                           Label="Enter Email"
                                           Variant="Variant.Outlined"
@@ -45,6 +46,7 @@
                         <MudContainer Class="mt-5">
                             <label class="block text-sm font-semibold mb-1">Password</label>
                             <MudTextField @bind-Value="Input.Password"
+                                          Autocomplete="current-password"
                                           T="string"
                                           Label="Enter Password"
                                           Variant="Variant.Outlined"

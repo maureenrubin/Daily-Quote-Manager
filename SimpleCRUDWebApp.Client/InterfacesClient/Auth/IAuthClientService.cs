@@ -7,7 +7,7 @@ namespace DailyQuoteManager.Client.InterfacesClient.Auth
     {
         Task<bool> LoginAsync(string email, string password);
 
-        Task Logoutasync();
+        Task LogoutAsync();
 
         Task<Response> RegisterAsync(RegisterUserInputRequestDto request);
 
