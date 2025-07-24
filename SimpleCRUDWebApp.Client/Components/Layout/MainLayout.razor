@@ -45,7 +45,7 @@
         if (user.Identity?.IsAuthenticated ?? false)
         {
             UserName = user.Identity.Name ?? user.FindFirst(ClaimTypes.Name)?.Value ?? "User";
-            UserRole = user.FindFirst(ClaimTypes.Role)?.Value ?? "Unknown";
+            UserRole = user.FindFirst(ClaimTypes.Role)?.Value ?? "DefaultUser";
         }
     }
 

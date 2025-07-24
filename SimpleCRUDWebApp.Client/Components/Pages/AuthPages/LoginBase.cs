@@ -2,6 +2,7 @@
 using DailyQuoteManager.Client.DTOs.Auth.Login;
 using DailyQuoteManager.Client.InterfacesClient.Auth;
 using DailyQuoteManager.Client.Security;
+using DailyQuoteManager.Client.ServicesClient.Auth;
 using DailyQuoteManager.Client.Utilities;
 using Microsoft.AspNetCore.Components;
 using System.Security.Claims;
@@ -12,14 +13,13 @@ namespace DailyQuoteManager.Client.Components.Pages.AuthPages
     {
         #region Injected Services
         [Inject] protected IAuthClientService AuthClientService { get; set; } = default!;
+        [Inject] protected ITokenClientService TokenService { get; set; } = default!;
         [Inject] protected CustomAuthStateProvider customAuthStateProvider { get; set; } = default!;
         [Inject] protected NavigationManager Navigation { get; set; } = default!;
         [Inject] protected ILogger<LoginBase> Logger { get; set; } = default!;
-
         #endregion
 
         #region Protected Fields
-
         protected LoginInputRequestDto Input { get; set; } = new();
         protected Response Response { get; set; } = new();
         protected ShowPasswordUtil showPasswordUtil { get; set; } = new();
@@ -37,31 +37,36 @@ namespace DailyQuoteManager.Client.Components.Pages.AuthPages
 
                 if (loginSuccess)
                 {
-
-                    await customAuthStateProvider.NotifyUserAuthentication();
-
-
-                    var authState = await customAuthStateProvider.GetAuthenticationStateAsync();
-                    var user = authState.User;
-
-                    var roleClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
-                    var role = roleClaim?.Value ?? string.Empty;
-
-                    Logger.LogInformation($"Logged in user with role: {role}");
-
-
-                    if (role == "DefaultUser")
+                    var token = await TokenService.GetToken();
+                    if (!string.IsNullOrWhiteSpace(token))
                     {
-                        Navigation.NavigateTo("/dashboard");
+                        await customAuthStateProvider.NotifyUserAuthentication();
+                        var authState = await customAuthStateProvider.GetAuthenticationStateAsync();
+                        var user = authState.User;
+
+                        var roleClaim = user.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role);
+                        var role = roleClaim?.Value ?? string.Empty;
+
+                        Logger.LogInformation($"Logged in user with role: {role}");
+
+                        if (role == "DefaultUser")
+                        {
+                            Navigation.NavigateTo("/dashboard", forceLoad: true);
+                        }
+                        else
+                        {
+                            Response = Response with { ErrorMessage = "You do not have permission to access this system." };
+                        }
                     }
                     else
                     {
-                        Response = Response with { ErrorMessage = "Invalid login credentials." };
+                        Response = Response with { ErrorMessage = "Login succeeded, but token was not stored." };
+                        Logger.LogWarning("Login succeeded but token is missing from localStorage.");
                     }
                 }
                 else
                 {
-                    Response = Response with { ErrorMessage = "Invalid login credentials." }; Response = new Response(ErrorMessage: "Invalid email or password", MessageType: "warning");
+                    Response = new Response(ErrorMessage: "Invalid email or password", MessageType: "warning");
                 }
             }
             catch (Exception ex)
@@ -73,15 +78,12 @@ namespace DailyQuoteManager.Client.Components.Pages.AuthPages
             {
                 isLoading = false;
             }
-
         }
 
         protected void ShowPasswordOnClick()
         {
             showPasswordUtil.Toggle();
         }
-
         #endregion
     }
 }
-
