@@ -4,12 +4,13 @@ using Microsoft.JSInterop;
 namespace DailyQuoteManager.Client.ServicesClient.Auth
 {
     public class TokenClientService(
-        IJSRuntime jsRuntime,
-        ICookieClientService cookiesServices): ITokenClientService
+          ICookieClientService cookiesServices,
+          IJSRuntime jsRuntime
+      ): ITokenClientService
     {
         #region Fields
 
-        private readonly string tokenKey = "_accessToken";
+        private readonly string tokenKey = "accessToken";
 
         #endregion Fields
 

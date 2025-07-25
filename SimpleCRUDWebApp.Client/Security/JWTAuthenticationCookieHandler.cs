@@ -28,10 +28,8 @@ namespace DailyQuoteManager.Client.Security
                 var token = Context.Request.Cookies["_accessToken"];
                
                 if (string.IsNullOrEmpty(token))
-                {
                     return Task.FromResult(AuthenticateResult.Fail("Missing Token"));
-                }
-
+               
                 var handler = new JwtSecurityTokenHandler();
                 var jwt = handler.ReadJwtToken(token);
 

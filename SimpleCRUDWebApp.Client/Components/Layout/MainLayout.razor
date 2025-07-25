@@ -16,11 +16,6 @@
 <MudLayout>
     <MudAppBar Elevation="4">
         <MudText Typo="Typo.h6" Class="mr-4"> Daily Quote Manager </MudText>
-        @if (!string.IsNullOrEmpty(UserName))
-        {
-            <MudText Typo="Typo.subtitle2" Class="text-white">Hello, @UserName (@UserRole)</MudText>
-        }
-
         <MudSpacer />
 
         <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="LogoutAsync">Logout</MudButton>
@@ -34,20 +29,18 @@
 </MudLayout>
 
 @code {
-    private string UserName = string.Empty;
-    private string UserRole = string.Empty;
 
-    protected override async Task OnInitializedAsync()
+    [Inject] IJSRuntime jSRuntime { get; set; } = default!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        var authState = await AuthStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-
-        if (user.Identity?.IsAuthenticated ?? false)
+        if (firstRender)
         {
-            UserName = user.Identity.Name ?? user.FindFirst(ClaimTypes.Name)?.Value ?? "User";
-            UserRole = user.FindFirst(ClaimTypes.Role)?.Value ?? "DefaultUser";
+            var token = await jSRuntime.InvokeAsync<string>("getCookie", "_accessToken");
         }
     }
+
+
 
     private async Task LogoutAsync()
     {

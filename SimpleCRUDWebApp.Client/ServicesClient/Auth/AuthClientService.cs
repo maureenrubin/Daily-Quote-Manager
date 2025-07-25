@@ -83,11 +83,13 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
                 if (response.IsSuccessStatusCode)
                 {
                     // Reads the response body as JSON
-                    var result = await response.Content.ReadFromJsonAsync<AuthResponseDto>();
+                    var json = await response.Content.ReadAsStringAsync();
+                    var result = JsonConvert.DeserializeObject<AuthResponseDto>(json);
 
                     if (result != null && !string.IsNullOrEmpty(result.AccessToken))
                     {
                         await _tokenService.SetToken(result.AccessToken);
+                        await _refreshTokenService.Set(result.RefreshToken);
                         return true;
                     }
                     else

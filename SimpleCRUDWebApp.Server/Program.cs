@@ -1,10 +1,3 @@
-using DailyQuoteManager.Persistence.DependencyInjections;
-using ApiExceptionMiddleware = DailyQuoteManager.Api.Middleware.ExceptionMiddleware;
-using DailyQuoteManager.Api.Middleware;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
-using System.Security.Claims;
-using System.Text;
 using DailyQuoteManager.Api;
 
 

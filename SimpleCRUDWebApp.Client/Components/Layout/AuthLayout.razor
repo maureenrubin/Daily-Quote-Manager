@@ -1,4 +1,6 @@
-﻿@inherits LayoutComponentBase
+﻿
+@inherits LayoutComponentBase
+
 
 <MudThemeProvider />
 <MudPopoverProvider />
@@ -9,3 +11,16 @@
     <MudAppBar Elevation="4">
         <MudText Typo="Typo.h6"> Daily Quote Manager </MudText>
     </MudAppBar>
+
+    @code{
+    [Inject] IJSRuntime jSRuntime { get; set; } = default!;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var token = await jSRuntime.InvokeAsync<string>("getCookie", "_accessToken");
+        }
+    }
+
+    }
