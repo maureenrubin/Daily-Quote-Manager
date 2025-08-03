@@ -4,8 +4,20 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DailyQuoteManager.Persistence.Repositories
 {
-    public class BaseRepository<T> (AppDbContext dbContext) : IBaseRepository<T> where T : class
+    public class BaseRepository<T> : IBaseRepository<T> where T : class
     {
+
+        #region Fields
+
+        protected readonly AppDbContext dbContext;
+
+        #endregion Fields
+
+        public BaseRepository(AppDbContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+
         #region Public Methods
 
         public virtual async Task<T?> GetByIdAsync(Guid id)

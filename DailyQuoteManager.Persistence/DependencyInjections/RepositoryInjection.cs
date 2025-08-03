@@ -15,8 +15,10 @@ namespace DailyQuoteManager.Infrastructure.DependencyInjections
             services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IUserRepository, UserRepository>();
-            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped<IQuotesRepository, QuotesRepository>();
 
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+           
             return services;
         }
 
