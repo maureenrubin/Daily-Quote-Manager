@@ -1,8 +1,6 @@
 using Blazored.LocalStorage;
 using DailyQuoteManager.Client.Components;
 using DailyQuoteManager.Client.DependencyInjections;
-using DailyQuoteManager.Client.Security;
-using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
 
 
@@ -15,12 +13,9 @@ builder.Services.AddMudServices();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddAuthentication("Cookies")
-    .AddCookie("Cookies", options =>
-    {
-        options.LoginPath = "/login"; 
-    });
+
 
 builder.Services.AddAuthorization(); 
 
@@ -34,6 +29,7 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error", createScopeForErrors: true);
     app.UseHsts();
 }
+
 
 
 app.UseAuthentication();

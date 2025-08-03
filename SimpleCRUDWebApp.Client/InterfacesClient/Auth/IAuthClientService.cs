@@ -12,5 +12,7 @@ namespace DailyQuoteManager.Client.InterfacesClient.Auth
         Task<Response> RegisterAsync(RegisterUserInputRequestDto request);
 
         Task<bool> RefreshTokenAsync();
+
+        
     }
 }

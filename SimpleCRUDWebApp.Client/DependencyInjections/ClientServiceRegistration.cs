@@ -8,6 +8,7 @@ using DailyQuoteManager.Client.ServicesClient.Quote;
 using DailyQuoteManager.Client.ServicesClient.UserManagement;
 using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor.Services;
+using System.Text.Json;
 
 namespace DailyQuoteManager.Client.DependencyInjections
 {
@@ -34,10 +35,13 @@ namespace DailyQuoteManager.Client.DependencyInjections
             services.AddAuthentication()
             .AddScheme<CustomOption, JWTAuthenticationCookieHandler>("JWTAuth", options => { });
 
-            services.AddMudServices();
-            services.AddCascadingAuthenticationState();
-            services.AddHttpContextAccessor();
-
+            services.Configure<JsonSerializerOptions>(options =>
+            {
+                var mvcOptions = new JsonSerializerOptions(JsonSerializerDefaults.Web);
+                options.PropertyNamingPolicy = mvcOptions.PropertyNamingPolicy;
+                options.DictionaryKeyPolicy = mvcOptions.DictionaryKeyPolicy;
+                options.WriteIndented = false;
+            });
 
             services.AddScoped<IAccountManagementClientService, AccountManagementClientService>();
             services.AddScoped<IAuthClientService, AuthClientService>();
@@ -46,6 +50,8 @@ namespace DailyQuoteManager.Client.DependencyInjections
             services.AddScoped<ITokenClientService, TokenClientService>();
             services.AddScoped<IRefreshTokenClientService, RefreshTokenClientService>();
             services.AddScoped<ICookieClientService, CookieClientService>();
+
+            services.AddScoped<TestClientService>();
 
 
             services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();

@@ -25,7 +25,7 @@ namespace DailyQuoteManager.Client.Security
 
         protected override Task <AuthenticateResult> HandleAuthenticateAsync()
         {
-                var token = Context.Request.Cookies["_accessToken"];
+                var token = Context.Request.Cookies["access_token"];
                
                 if (string.IsNullOrEmpty(token))
                     return Task.FromResult(AuthenticateResult.Fail("Missing Token"));

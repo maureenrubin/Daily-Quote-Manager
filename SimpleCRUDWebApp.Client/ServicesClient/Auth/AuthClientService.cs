@@ -77,12 +77,10 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
         {
             try
             {
-                // Sends login request to the API
                 var response = await _httpClient.PostAsJsonAsync("auth/login", new { email, password });
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Reads the response body as JSON
                     var json = await response.Content.ReadAsStringAsync();
                     var result = JsonConvert.DeserializeObject<AuthResponseDto>(json);
 
@@ -123,8 +121,8 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
         {
             var refreshToken = await _refreshTokenService.Get();
             _httpClient.DefaultRequestHeaders.Add("Cookie", $"_refreshToken={refreshToken}");
-            
-            var response = await _httpClient.PostAsync("auth/logout", null);
+
+            var response = await _httpClient.PostAsync("auth/refresh-token", null);
 
             if (response.IsSuccessStatusCode)
             {
@@ -136,11 +134,11 @@ namespace DailyQuoteManager.Client.ServicesClient.Auth
                     await _refreshTokenService.Set(result.RefreshToken);
                     return true;
                 }
+
             }
 
             return false;
         }
-
         #endregion Public Methods
 
     }

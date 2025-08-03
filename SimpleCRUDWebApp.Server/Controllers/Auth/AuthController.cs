@@ -55,7 +55,6 @@ namespace DailyQuoteManager.Api.Controllers.Auth
                 Message = message
             });
         }
-
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginInputRequestDto request)
         {
@@ -64,9 +63,20 @@ namespace DailyQuoteManager.Api.Controllers.Auth
             if (tokenResponse == null)
                 return Unauthorized(new { message = "Unauthorized" });
 
-            return Ok(tokenResponse);
-        }
+            // Set refresh token as HTTP-only cookie
+            var cookieOptions = new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true, // Use only with HTTPS
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.UtcNow.AddMonths(1)
+            };
 
+            Response.Cookies.Append("refreshtoken", tokenResponse.RefreshToken, cookieOptions);
+
+            // Return only access token to client
+            return Ok(new { AccessToken = tokenResponse.AccessToken });
+        }
 
         [HttpPost("refresh-token")]
         public async Task<ActionResult<TokenResponseDto>> RefreshToken()

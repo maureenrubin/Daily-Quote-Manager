@@ -8,7 +8,7 @@ namespace DailyQuoteManager.Client.Security
 
         protected override async Task<HttpResponseMessage> SendAsync(HttpRequestMessage request, CancellationToken cancellationToken)
         {
-            var token = httpContextAccessor.HttpContext?.Request.Cookies["_accesstoken"];
+            var token = httpContextAccessor.HttpContext?.Request.Cookies["access_token"];
 
             if (!string.IsNullOrWhiteSpace(token))
             {

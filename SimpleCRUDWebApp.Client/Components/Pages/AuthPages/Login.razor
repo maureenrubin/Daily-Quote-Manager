@@ -1,7 +1,8 @@
-﻿@page "/login"
+﻿@page "/"
 @inherits LoginBase
-@layout MainLayout
+@layout AuthLayout
 @rendermode InteractiveServer
+@attribute [AllowAnonymous]
 
 <PageTitle>Login - Daily Quote Manager</PageTitle>
 
@@ -27,7 +28,7 @@
                     </MudAlert>
                 }
 
-                <EditForm Model="Input" OnValidSubmit="HandleLoginOnClick" FormName="loginForm">
+                <EditForm Model="Input" OnValidSubmit="HandleLogicClick" FormName="loginForm">
                     <DataAnnotationsValidator />
                     <MudForm>
 
@@ -53,7 +54,7 @@
                                           InputType="@(showPasswordUtil?.InputType ?? InputType.Password)"
                                           Adornment="Adornment.End"
                                           AdornmentIcon="@(showPasswordUtil?.Icon ?? Icons.Material.Filled.Visibility)"
-                                          OnAdornmentClick="ShowPasswordOnClick"
+                                          OnAdornmentClick="showPasswordUtil.Toggle"
                                           FullWidth
                                           Class="min-h-[45px] max-h-[60px]"
                                           Required />
@@ -95,6 +96,8 @@
                             Sign up here
                         </MudLink>
                     </MudText>
+
+                    <MudText> @_testResult </MudText>
                 </div>
             </MudCardContent>
         </MudCard>

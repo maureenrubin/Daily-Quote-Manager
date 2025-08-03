@@ -24,15 +24,14 @@ namespace DailyQuoteManager.Api
             var allowedOrigins = builder.Configuration.GetSection("AllowedOrigins").Get<string[]>();
         
             // CORS Configuration
-            builder.Services.AddCors(policy =>
+            builder.Services.AddCors(opt =>
             {
-                policy.AddPolicy("AllowBlazorApp", policy =>
-                {
+                opt.AddPolicy("open", policy =>
                     policy.WithOrigins(allowedOrigins)
                     .AllowAnyHeader()
                     .AllowAnyMethod()
-                    .AllowCredentials();
-                });
+                    .AllowCredentials()
+                    .SetPreflightMaxAge(TimeSpan.FromMinutes(10)));
             });
 
             builder.Services.AddEndpointsApiExplorer();
@@ -52,16 +51,11 @@ namespace DailyQuoteManager.Api
 
             }
 
-
-
-            app.UseCors("AllowBlazorApp");
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseAuthorization();
             app.UseMiddleware<ExceptionMiddleware>();
             app.MapControllers();
-
-
             return app;
         }
 
