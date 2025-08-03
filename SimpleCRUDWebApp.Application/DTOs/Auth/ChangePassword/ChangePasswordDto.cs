@@ -2,7 +2,7 @@
 
 namespace DailyQuoteManager.Application.DTOs.Auth.ChangePassword
 {
-    public class ChangePasswordDto
+    public sealed class ChangePasswordDto
     {
         #region Properties
 

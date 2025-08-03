@@ -1,6 +1,6 @@
 ﻿namespace DailyQuoteManager.Application.DTOs.Auth.RefreshToken
 {
-    public class RefreshTokenDto
+    public sealed class RefreshTokenDto
     {
         #region Properties 
 

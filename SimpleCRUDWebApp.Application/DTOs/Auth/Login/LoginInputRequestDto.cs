@@ -1,6 +1,6 @@
 ﻿namespace DailyQuoteManager.Application.DTOs.Auth.Login
 {
-    public class LoginInputRequestDto
+    public sealed class LoginInputRequestDto
     {
 
         #region Properties

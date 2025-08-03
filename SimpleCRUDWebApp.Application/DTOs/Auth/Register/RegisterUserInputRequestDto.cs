@@ -2,7 +2,7 @@
 
 namespace DailyQuoteManager.Application.DTOs.Auth.Register
 {
-    public class RegisterUserInputRequestDto
+    public sealed class RegisterUserInputRequestDto
     {
 
         #region Properties
