@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using DailyQuoteManager.Domain.Enums;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DailyQuoteManager.Domain.Entities
@@ -22,7 +23,7 @@ namespace DailyQuoteManager.Domain.Entities
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         [MaxLength(100)]
-        public string Category { get; set; } = "General";
+        public QuoteCategory Category { get; set; } = QuoteCategory.General;
 
         public bool IsPublic { get; set; } = true;
 

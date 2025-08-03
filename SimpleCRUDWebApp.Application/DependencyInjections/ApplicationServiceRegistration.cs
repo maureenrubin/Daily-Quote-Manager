@@ -1,7 +1,9 @@
 ﻿using DailyQuoteManager.Application.Common.Mapping;
 using DailyQuoteManager.Application.Contracts.Interfaces.Auth;
+using DailyQuoteManager.Application.Contracts.Interfaces.Quote;
 using DailyQuoteManager.Application.Contracts.Interfaces.UserManagement;
 using DailyQuoteManager.Application.Services.Auth;
+using DailyQuoteManager.Application.Services.Quote;
 using DailyQuoteManager.Application.Services.UserManagement;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -23,6 +25,7 @@ namespace DailyQuoteManager.Application.DependencyInjections
             service.AddScoped<ITokenService, TokenService>();
             service.AddScoped<IPasswordHasherService, PasswordHasherService>();
             service.AddScoped<IRefreshTokenService, RefreshTokenService>();
+            service.AddScoped<IQuoteService, QuoteService>();
 
             return service;
         }

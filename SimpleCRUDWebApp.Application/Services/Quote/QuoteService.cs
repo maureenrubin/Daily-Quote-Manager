@@ -4,5 +4,6 @@ namespace DailyQuoteManager.Application.Services.Quote
 {
     public class QuoteService : IQuoteService
     {
+
     }
 }
