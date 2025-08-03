@@ -1,6 +1,6 @@
 ﻿namespace DailyQuoteManager.Application.Common.Responses
 {
-    public record Response(
+    public sealed record Response(
 
         bool Success = false,
         string ErrorMessage = "",
