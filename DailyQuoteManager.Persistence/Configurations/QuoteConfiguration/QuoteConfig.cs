@@ -19,7 +19,9 @@ namespace DailyQuoteManager.Persistence.Configurations.QuoteConfiguration
                    .OnDelete(DeleteBehavior.Cascade);
 
 
-            builder.HasIndex(q => q.Category);
+            builder.Property(q => q.Category)
+                .HasConversion<string>()
+                .HasMaxLength(100);
 
         }
 
