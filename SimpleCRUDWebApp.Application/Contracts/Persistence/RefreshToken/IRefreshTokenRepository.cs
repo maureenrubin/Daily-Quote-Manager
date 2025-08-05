@@ -1,7 +1,7 @@
 ﻿
 using DailyQuoteManager.Domain.Entities;
 
-namespace DailyQuoteManager.Domain.Interfaces
+namespace DailyQuoteManager.Application.Contracts.Persistence
 {
     public interface IRefreshTokenRepository
     {

@@ -2,7 +2,7 @@
 using DailyQuoteManager.Application.Contracts.Interfaces.Auth;
 using DailyQuoteManager.Application.DTOs.Auth.Login;
 using DailyQuoteManager.Application.DTOs.Auth.Register;
-using DailyQuoteManager.Domain.Interfaces;
+using DailyQuoteManager.Application.Contracts.Persistence;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
