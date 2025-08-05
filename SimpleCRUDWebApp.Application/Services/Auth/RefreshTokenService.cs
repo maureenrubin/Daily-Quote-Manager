@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
 using DailyQuoteManager.Application.Common.Responses;
 using DailyQuoteManager.Application.Contracts.Interfaces.Auth;
+using DailyQuoteManager.Application.Contracts.Persistence;
 using DailyQuoteManager.Application.DTOs.Auth.RefreshToken;
 using DailyQuoteManager.Domain.Entities;
-using DailyQuoteManager.Domain.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
 
 namespace DailyQuoteManager.Application.Services.Auth
 {

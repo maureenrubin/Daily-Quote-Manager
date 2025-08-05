@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SimpleCRUDWebApp.Client\DailyQuoteManager.Client.csproj" />
     <ProjectReference Include="..\SimpleCRUDWebApp.Domain\DailyQuoteManager.Domain.csproj" />
   </ItemGroup>
 

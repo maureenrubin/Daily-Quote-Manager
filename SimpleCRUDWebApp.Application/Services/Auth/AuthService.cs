@@ -1,10 +1,9 @@
 ﻿using AutoMapper;
-using DailyQuoteManager.Application.Common.Mapping.Profiles;
 using DailyQuoteManager.Application.Common.Responses;
 using DailyQuoteManager.Application.Contracts.Interfaces.Auth;
+using DailyQuoteManager.Application.Contracts.Persistence;
 using DailyQuoteManager.Application.DTOs.Auth.Register;
 using DailyQuoteManager.Domain.Entities;
-using DailyQuoteManager.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 
 namespace DailyQuoteManager.Application.Services.Auth

@@ -1,4 +1,5 @@
 ﻿using DailyQuoteManager.Application.Common.Mapping;
+using DailyQuoteManager.Application.Common.Validators;
 using DailyQuoteManager.Application.Contracts.Interfaces.Auth;
 using DailyQuoteManager.Application.Contracts.Interfaces.Quote;
 using DailyQuoteManager.Application.Contracts.Interfaces.UserManagement;
@@ -17,8 +18,10 @@ namespace DailyQuoteManager.Application.DependencyInjections
         public static IServiceCollection AddApplicationService(
             this IServiceCollection service, IConfiguration configuration)
         {
-
+            service.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             service.AddAutoMapper(typeof(BaseMappingProfiles).Assembly);
+
+            service.AddScoped<QuotesValidor>();
 
             service.AddScoped<IUserService, UserService>();
             service.AddScoped<IAuthService, AuthService>();

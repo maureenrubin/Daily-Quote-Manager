@@ -12,9 +12,10 @@ namespace DailyQuoteManager.Application.DTOs.Quote.Quotes
 
         public string Author { get; set; } = "Unknown";
 
-        public QuoteCategory? Category { get; set; }
+        public QuoteCategory Category { get; set; }
 
         public bool IsPublic { get; set; } = true;
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public Guid? AddedByUserId { get; set; }
 

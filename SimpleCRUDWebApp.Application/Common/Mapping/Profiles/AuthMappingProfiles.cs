@@ -25,13 +25,7 @@ namespace DailyQuoteManager.Application.Common.Mapping.Profiles
                 .ForMember(dest => dest.AppUserId, opt => opt.Ignore()) 
                 .ForMember(dest => dest.RefreshTokenId, opt => opt.Ignore());
             
-            CreateMap<QuotesInputReqDto, Quotes>()
-                .ForMember(dest => dest.QuoteId, opt => opt.Condition(src => src.QuoteId != null))
-                .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category ?? QuoteCategory.General))
-                .ForMember(dest => dest.CreatedAt, opt => opt.Ignore())
-                .ForMember(dest => dest.ApplicationUser, opt => opt.Ignore())
-                .ForMember(dest => dest.FavoritedByUsers, opt => opt.Ignore())
-                .ForMember(dest => dest.DailyQuotes, opt => opt.Ignore());
+          
         }
 
 

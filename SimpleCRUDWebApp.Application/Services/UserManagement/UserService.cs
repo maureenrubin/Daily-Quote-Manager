@@ -1,6 +1,6 @@
 ﻿using DailyQuoteManager.Application.Contracts.Interfaces.UserManagement;
 using DailyQuoteManager.Domain.Entities;
-using DailyQuoteManager.Domain.Interfaces;
+using DailyQuoteManager.Application.Contracts.Persistence;
 
 namespace DailyQuoteManager.Application.Services.UserManagement
 {
