@@ -1,6 +1,6 @@
 ﻿using DailyQuoteManager.Domain.Entities;
 using DailyQuoteManager.Domain.Enums;
-using DailyQuoteManager.Domain.Interfaces;
+using DailyQuoteManager.Application.Contracts.Persistence;
 using DailyQuoteManager.Persistence.DatabaseContext;
 using Microsoft.EntityFrameworkCore;
 

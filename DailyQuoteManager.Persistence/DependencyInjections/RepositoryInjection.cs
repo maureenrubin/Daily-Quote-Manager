@@ -1,5 +1,4 @@
 ﻿using DailyQuoteManager.Application.Contracts.Persistence;
-using DailyQuoteManager.Domain.Interfaces;
 using DailyQuoteManager.Persistence.Repositories;
 using Microsoft.Extensions.DependencyInjection;
 
