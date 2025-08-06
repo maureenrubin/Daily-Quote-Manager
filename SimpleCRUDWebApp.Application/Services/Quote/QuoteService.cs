@@ -5,6 +5,7 @@ using DailyQuoteManager.Client.DTOs.Quotes;
 using DailyQuoteManager.Application.Contracts.Persistence;
 using DailyQuoteManager.Application.Common.Validators;
 using DailyQuoteManager.Domain.Entities;
+using DailyQuoteManager.Domain.Enums;
 namespace DailyQuoteManager.Application.Services.Quote
 {
     public class QuoteService : IQuoteService
@@ -47,7 +48,7 @@ namespace DailyQuoteManager.Application.Services.Quote
             {
                 Text = request.Text,
                 Author = request.Author,
-                //Category = request.Category?.ToString(),
+            //    Category = Enum.Parse<QuoteCategory>(request.Category),
                 AddedByUserId = request.AddedByUserId.Value,
                 IsPublic = request.IsPublic,
                 CreatedAt = request.CreatedAt
@@ -61,6 +62,39 @@ namespace DailyQuoteManager.Application.Services.Quote
             return ValidationResult<QuotesOutputDto>.Success(quotesDto);
         }
 
+        public async Task<ValidationResult<QuotesOutputDto>> UpdateQuotesAsync(Guid quotesId, QuotesInputReqDto request)
+        {
+            var existingQuote = await quotesRepository.GetByIdAsync(quotesId);
+            if (existingQuote == null) return ValidationResult<QuotesOutputDto>.Fail($"Election with ID {quotesId} not found");
+
+            existingQuote.Text = request.Text;
+            existingQuote.Author = request.Author;
+         //   existingQuote.Category = Enum.Parse<QuoteCategory>(request.Category);
+            existingQuote.IsPublic = request.IsPublic;
+            existingQuote.CreatedAt = request.CreatedAt;
+
+            var updateQuotes = await quotesRepository.UpdateAsync(existingQuote);
+            await unitOfWork.SaveChangesAsync();
+
+            var updateQuotesDto = mapper.Map<QuotesOutputDto>(existingQuote);
+
+            return ValidationResult<QuotesOutputDto>.Success(updateQuotesDto);
+        }
+
+
+        public async Task<ValidationResult<QuotesInputReqDto>> DeleteQuotesAsync(Guid quotesId)
+        {
+            var quotes = await quotesRepository.GetByIdAsync(quotesId);
+            if(quotes == null) return ValidationResult<QuotesInputReqDto>.Fail($"Election with ID {quotesId} not found");
+
+            await quotesRepository.DeleteByIdAsync(quotesId);
+            await unitOfWork.SaveChangesAsync();
+
+            var deletedQuotes = mapper.Map<QuotesInputReqDto>(quotes);
+
+            return ValidationResult<QuotesInputReqDto>.Success(mapper.Map<QuotesInputReqDto>(deletedQuotes));
+
+        }
         #endregion Public Methods
 
     }

@@ -11,7 +11,7 @@ namespace DailyQuoteManager.Client.DTOs.Quotes
 
         public string Author { get; set; } = string.Empty;
 
-        public QuoteCategory? Category { get; set; }
+        public QuoteCategory Category { get; set; }
 
         public bool IsPublic { get; set; } 
 
