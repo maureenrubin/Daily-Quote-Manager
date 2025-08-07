@@ -40,21 +40,14 @@ namespace DailyQuoteManager.Application.Services.Quote
 
         public async Task<ValidationResult<QuotesOutputDto>> CreateQuotesAsync(QuotesInputReqDto request)
         {
-            if(request == null) return ValidationResult<QuotesOutputDto>.Fail(nameof(request));
-
+            if(request == null) 
+                return ValidationResult<QuotesOutputDto>.Fail("request is invalid");
+            
             quotesValidor.QuotesCreate(request);
 
-            var quote = new Quotes
-            {
-                Text = request.Text,
-                Author = request.Author,
-            //    Category = Enum.Parse<QuoteCategory>(request.Category),
-                AddedByUserId = request.AddedByUserId.Value,
-                IsPublic = request.IsPublic,
-                CreatedAt = request.CreatedAt
-            };
+            var quotes = mapper.Map<Quotes>(request);
 
-            var createQuote = await quotesRepository.AddAsync(quote);
+            var createQuote = await quotesRepository.AddAsync(quotes);
             await unitOfWork.SaveChangesAsync();
 
             var quotesDto = mapper.Map<QuotesOutputDto>(createQuote);
@@ -65,11 +58,12 @@ namespace DailyQuoteManager.Application.Services.Quote
         public async Task<ValidationResult<QuotesOutputDto>> UpdateQuotesAsync(Guid quotesId, QuotesInputReqDto request)
         {
             var existingQuote = await quotesRepository.GetByIdAsync(quotesId);
-            if (existingQuote == null) return ValidationResult<QuotesOutputDto>.Fail($"Election with ID {quotesId} not found");
+            if (existingQuote == null) 
+                return ValidationResult<QuotesOutputDto>.Fail($"Election with ID {quotesId} not found");
 
             existingQuote.Text = request.Text;
             existingQuote.Author = request.Author;
-         //   existingQuote.Category = Enum.Parse<QuoteCategory>(request.Category);
+            //existingQuote.Category = request.Category.ToString();
             existingQuote.IsPublic = request.IsPublic;
             existingQuote.CreatedAt = request.CreatedAt;
 
@@ -85,7 +79,8 @@ namespace DailyQuoteManager.Application.Services.Quote
         public async Task<ValidationResult<QuotesInputReqDto>> DeleteQuotesAsync(Guid quotesId)
         {
             var quotes = await quotesRepository.GetByIdAsync(quotesId);
-            if(quotes == null) return ValidationResult<QuotesInputReqDto>.Fail($"Election with ID {quotesId} not found");
+            if(quotes == null) 
+                return ValidationResult<QuotesInputReqDto>.Fail($"Election with ID {quotesId} not found");
 
             await quotesRepository.DeleteByIdAsync(quotesId);
             await unitOfWork.SaveChangesAsync();

@@ -11,18 +11,13 @@ namespace DailyQuoteManager.Domain.Entities
         [Key]
         public Guid QuoteId { get; set; } = Guid.NewGuid();
 
-        [Required]
-        [MaxLength(1000)]
+      
         public string Text { get; set; } = string.Empty;
-
-        [Required]
-        [MaxLength(255)]
+        
         public string Author { get; set; } = "Unknown";
 
-        [Required]
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
-        [MaxLength(100)]
         public QuoteCategory Category { get; set; } = QuoteCategory.General;
 
         public bool IsPublic { get; set; } = true;

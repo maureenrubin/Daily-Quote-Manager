@@ -30,10 +30,12 @@ namespace DailyQuoteManager.Persistence.DependencyInjections
                        .LogTo(Console.WriteLine, LogLevel.Information);
             });
 
-            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
             services.AddScoped<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+
+            services.AddScoped<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IQuotesRepository, QuotesRepository>();
 
 
             return services;

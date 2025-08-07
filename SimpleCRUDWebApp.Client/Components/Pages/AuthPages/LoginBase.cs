@@ -18,7 +18,7 @@ namespace DailyQuoteManager.Client.Components.Pages.AuthPages
         [Inject] protected CustomAuthStateProvider customAuthStateProvider { get; set; } = default!;
         [Inject] protected NavigationManager NavigateManager { get; set; } = default!;
         [Inject] protected ILogger<LoginBase> Logger { get; set; } = default!;
-        [Inject] protected TestClientService TestService { get; set; } = default!;
+       
         #endregion
 
         #region Protected Fields
@@ -32,11 +32,7 @@ namespace DailyQuoteManager.Client.Components.Pages.AuthPages
 
         #region Protected Methods
 
-        protected override async Task OnInitializedAsync()
-        {
-            _testResult = await TestService.Testing();
-        }
-
+      
         protected async Task HandleLogicClick()
         {
             try
@@ -76,10 +72,6 @@ namespace DailyQuoteManager.Client.Components.Pages.AuthPages
              }
         }
 
-        protected async Task Test()
-        {
-            await TestService.Testing();
-        }
 
         #endregion
     }

@@ -14,6 +14,8 @@ namespace DailyQuoteManager.Application.Common.Mapping.Profiles
 
             CreateMap<Quotes, QuotesOutputDto>()
                 .ForMember(dest => dest.IsPublic, opt => opt.Ignore());
+
+            CreateMap<Quotes, QuotesInputReqDto>();
         }
     }
 }

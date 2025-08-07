@@ -18,7 +18,6 @@ namespace DailyQuoteManager.Application.Common.Validators
             if (!Enum.IsDefined(typeof(QuoteCategory), request.Category)) throw new ArgumentException("Invalid quote category.");
 
         }
-        
 
         #endregion Public Methods
 

@@ -51,8 +51,6 @@ namespace DailyQuoteManager.Client.DependencyInjections
             services.AddScoped<IRefreshTokenClientService, RefreshTokenClientService>();
             services.AddScoped<ICookieClientService, CookieClientService>();
 
-            services.AddScoped<TestClientService>();
-
 
             services.AddScoped<AuthenticationStateProvider, CustomAuthStateProvider>();
             services.AddScoped<CustomAuthStateProvider>();

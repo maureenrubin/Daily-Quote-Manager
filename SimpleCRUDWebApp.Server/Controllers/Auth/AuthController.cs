@@ -61,7 +61,7 @@ namespace DailyQuoteManager.Api.Controllers.Auth
             var tokenResponse = await authService.LoginAsync(request.Email, request.Password);
 
             if (tokenResponse == null)
-                return Unauthorized(new { message = "Unauthorized" });
+                return Unauthorized(new { message = "User not found." });
 
             // Set refresh token as HTTP-only cookie
             var cookieOptions = new CookieOptions
