@@ -1,18 +1,21 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using DailyQuoteManager.Application.Contracts.Interfaces.Quote;
+using DailyQuoteManager.Application.DTOs.Quote.Quotes;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DailyQuoteManager.Api.Controllers.Quotes
 {
-    [Authorize (Roles = "DefaultUser")]
-    [Route("api/[controller]")]
+  //  [Authorize(Roles = "DefaultUser")]
     [ApiController]
-    public class QuotesController : ControllerBase
+    [Route("api/[controller]")]
+    public class QuotesController (IQuoteService quotesService) : ControllerBase
     {
 
-         [HttpGet("testingconnection")]
-        public async Task<ActionResult> Testing()
+        [HttpPost("create-quote")]
+        public async Task<IActionResult> CreateQuote([FromBody] QuotesInputReqDto quotesDto)
         {
-            return Ok("Testing");
+            var result = await quotesService.CreateQuotesAsync(quotesDto);
+            return result == null ? NotFound() : Ok(result);
         }
 
     }
